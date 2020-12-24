@@ -8,18 +8,17 @@
         <!-- <h2 class="title">Introduction title</h2> -->
         <div class="initial-paragraph">
           <p class="introduction-text">
-            I work at the national broadcasting company of my country as the editor
-            for data journalism. I have worked here for 25 years. I started doing
-            data journalism very early at the end of the 90ies, 1996. I started
-            to use computational methods for my work as an investigative reporter.
-            I have also worked in Washington around 2005, where I worked with
-            huge datasets writing about lobbyism and campaign finance, then in 2015
-            I worked at the Guardian. I use all kinds of data tools to make long
-            investigative projects, I don't usually do daily journalism. I work a
-            lot in excel: collecting, cleaning and finding stories in data. I
-            rarely do visualizations, if I do a visualization it is only to find
-            a story. I can use GIS softwares, but we have a separate department
-            for graphics.
+            An unidentified flying object (UFO) is any aerial phenomenon that
+            cannot immediately be identified or explained. From the beginning of
+            1900 <span>more than 80.000 UFOs sightings have been reported</span>.
+            In August 2020 the Pentagon decided to form a new body to monitor these
+            mysterious events <span><a href="https://www.theguardian.com/us-news/2020/aug/15/us-department-defense-ufo-taskforce">(source)</a></span>.
+            I decided to visualize them, starting from 2010. Each sightning is represented
+            as a glyph, based on the shape of these mysterious flying objects: blinking lights,
+            crosses, cylinders, mutable structures are just some of the weird thigs reported. Some
+            entries even have comments and testimonies describing the event and the object in detail.
+            Some others are crooked and incomplete. Here each one of them can be browsed and geo-located.
+            <span>We still believe. We want to believe. We are not alone in this universe.</span>
           </p>
         </div>
         <img class="introduction-img" src="../assets/img/ufos.gif"/>
@@ -32,7 +31,7 @@
 import Menu from '../components/Menu.vue'
 
 export default {
-  name: 'HelloWorld',
+  name: 'Introduction',
   components: {
     Menu
   }
@@ -71,6 +70,13 @@ export default {
         font-family: $paragraphs;
         column-count: 2;
         column-gap: 40px;
+
+        span {
+          text-decoration-line: underline;
+          text-decoration-style: solid;
+          text-decoration-color: #7400ff;
+          text-decoration-thickness: 5px;
+        }
       }
     }
   }

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import { descending } from 'd3-array'
+import { groupBy } from 'lodash'
 import events from 'dsv-loader!@/assets/data/converted.csv' // eslint-disable-line import/no-webpack-loader-syntax
 
 Vue.use(Vuex)
@@ -13,13 +13,20 @@ const data = events.map(e => {
     duration: +e['duration (seconds)'],
     shape: e.shape,
     latitude: +e.latitude,
-    longitude: +e.longitude
+    longitude: +e.longitude,
+    year: +e.year
   }
 }).sort()
 
+const groupedData = groupBy(data, function (d) {
+  return d.year
+})
+
+console.log(groupedData)
+
 export default new Vuex.Store({
   state: {
-    data
+    groupedData
   },
   mutations: {
   },

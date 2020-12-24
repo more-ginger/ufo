@@ -2,8 +2,10 @@
   <div class="main-visualization">
     <Filters />
     <div class="innercontainer">
-      <div v-for="(ev, e) in data" :key="`${e}-sight`" >
+      <div v-for="(year, y) in groupedData" :key="`${y}-sight`" >
         <img
+            v-for="(ev, e) in year"
+            :key="`${e}-event`"
             class="glyph"
             :class="`${ev.country}-color`"
             :src="require(`../assets/img/shapes/${ev.shape}.png`)"
@@ -23,7 +25,7 @@ export default {
     Filters
   },
   computed: {
-    ...mapState(['data'])
+    ...mapState(['groupedData'])
   }
 }
 </script>
@@ -40,7 +42,6 @@ export default {
     width: 100%;
 
     div {
-      display: inline-flex;
       img.glyph {
         margin: 5px;
         width: 25px;

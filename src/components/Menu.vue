@@ -4,7 +4,7 @@
       <div class="labels-container">
         <h3 class="title">we still believe</h3>
         <div class="selectors">
-          <a href='#'><h3>all the sightings</h3></a>
+          <a href='#'><h3>all shapes</h3></a>
           <a href='#'><h3>in chronological order</h3></a>
           <a href='#'><img src="../assets/img/report-icon.png"/></a>
         </div>
