@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { groupBy } from 'lodash'
+import { groupBy, uniq } from 'lodash'
 import events from 'dsv-loader!@/assets/data/converted.csv' // eslint-disable-line import/no-webpack-loader-syntax
 
 Vue.use(Vuex)
@@ -22,11 +22,14 @@ const groupedData = groupBy(data, function (d) {
   return d.year
 })
 
+const years = uniq(data.map(d => { return d.year }))
+
 console.log(groupedData)
 
 export default new Vuex.Store({
   state: {
-    groupedData
+    groupedData,
+    years
   },
   mutations: {
   },

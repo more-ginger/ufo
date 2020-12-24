@@ -1,4 +1,4 @@
 // vue.config.js
-module.exports = {
-  publicPath: '/ufo/'
-}
+// module.exports = {
+//   publicPath: '/ufo/'
+// }

@@ -4,7 +4,15 @@
       <p class="label-title">All sightnings:</p>
     </div>
     <div class="filters">
-      <p class="filter">countries &#10132;</p>
+      <p class="filter" :class="active ? 'right': 'left'" v-on:click="active = !active">countries
+        <span>&#10132;</span>
+      </p>
+      <div class="years" :class="{visible: active === true}">
+        <p v-for="(y, i) in years" :key="i" class="year">
+          <input type="checkbox">
+          {{y}}
+        </p>
+      </div>
       <p class="filter">years &#10132;</p>
       <p class="filter">duration &#10132;</p>
     </div>
@@ -12,9 +20,18 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 
 export default {
-  name: 'Filters'
+  name: 'Filters',
+  data () {
+    return {
+      active: false
+    }
+  },
+  computed: {
+    ...mapState(['years'])
+  }
 }
 </script>
 
@@ -38,6 +55,22 @@ export default {
 
     .filter {
       margin: auto 10px;
+
+      & .left {
+        transform: rotate(90deg);
+      }
+    }
+
+    .years {
+      display: none;
+
+      &.visible {
+        display: inline-flex;
+      }
+
+      .year {
+        margin-right: 10px;
+      }
     }
   }
 }

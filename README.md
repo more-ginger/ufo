@@ -1,4 +1,6 @@
 # ufo
+UFO project.
+Original data: https://github.com/planetsig/ufo-reports
 
 ## Project setup
 ```
