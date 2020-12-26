@@ -2,13 +2,13 @@
   <div class="main-visualization">
     <Filters />
     <div class="innercontainer">
-      <div v-for="(year, y) in groupedData" :key="`${y}-sight`" >
+      <div v-for="(year, y) in sightnings" :key="`${y}-sight`" >
         <img
             v-for="(ev, e) in year"
             :key="`${e}-event`"
             class="glyph"
             :class="`${ev.country}-color`"
-            :src="require(`../assets/img/shapes/${ev.shape}.png`)"
+            :src="require(`../assets/img/shapes/${ev.shape}`)"
           />
       </div>
     </div>
@@ -17,6 +17,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { map } from 'lodash'
 import Filters from '../components/Filters.vue'
 
 export default {
@@ -25,7 +26,23 @@ export default {
     Filters
   },
   computed: {
-    ...mapState(['groupedData'])
+    ...mapState(['groupedData']),
+    sightnings () {
+      const { groupedData } = this
+      const gifs = ['other', 'flash', 'changing']
+      return map(groupedData, year => {
+        return map(year, d => {
+          let shape = d.shape + '.png'
+          if (gifs.includes(d.shape)) {
+            shape = d.shape + '.gif'
+          }
+          return {
+            shape,
+            country: d.country
+          }
+        })
+      })
+    }
   }
 }
 </script>
