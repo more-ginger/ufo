@@ -2,12 +2,21 @@
   <div class="main-visualization">
     <Filters />
     <div class="innercontainer">
-      <div v-for="(year, y) in sightnings" :key="`${y}-sight`" >
+      <div
+        v-for="(year, y) in sightnings"
+        :key="`${y}-sight`"
+        @mouseleave="toggleHighlight(null, 'end')"
+        >
         <img
             v-for="(ev, e) in year"
             :key="`${e}-event`"
             class="glyph"
-            :class="`${ev.country}-color`"
+            @mouseenter="toggleHighlight(e, 'on')"
+            :class="[
+              `${ev.country}-color`,
+              {highlightImg: highlight === e},
+              {noHighlight: highlight !== e && interaction === 'on'}
+            ]"
             :src="require(`../assets/img/shapes/${ev.shape}`)"
           />
       </div>
@@ -18,6 +27,8 @@
 <script>
 import { mapState } from 'vuex'
 import { map } from 'lodash'
+import { max, min } from 'd3-array'
+import { scaleLinear } from 'd3-scale'
 import Filters from '../components/Filters.vue'
 
 export default {
@@ -25,12 +36,23 @@ export default {
   components: {
     Filters
   },
+  data () {
+    return {
+      highlight: null,
+      interaction: 'end'
+    }
+  },
   computed: {
-    ...mapState(['groupedData']),
+    ...mapState(['filteredData']),
+    durationScale () {
+      const maxDuration = max(map(this.filteredData, year => { return max(map(year, d => { return d.duration })) }))
+      const minDuration = min(map(this.filteredData, year => { return min(map(year, d => { return d.duration })) }))
+      return scaleLinear().domain([minDuration, maxDuration]).range([0, 1])
+    },
     sightnings () {
-      const { groupedData } = this
+      const { filteredData } = this
       const gifs = ['other', 'flash', 'changing']
-      return map(groupedData, year => {
+      return map(filteredData, year => {
         return map(year, d => {
           let shape = d.shape + '.png'
           if (gifs.includes(d.shape)) {
@@ -42,6 +64,12 @@ export default {
           }
         })
       })
+    }
+  },
+  methods: {
+    toggleHighlight (index, active) {
+      this.highlight = index
+      this.interaction = active
     }
   }
 }
@@ -61,8 +89,9 @@ export default {
     div {
       img.glyph {
         margin: 5px;
-        width: 25px;
+        width: 20px;
         height: auto;
+        transition: transform .2s;
       }
 
       img.us-color {
@@ -78,6 +107,18 @@ export default {
 
       img.de-color {
         filter: hue-rotate(50deg);
+      }
+
+      img.highlightImg {
+        transform: scale(400%);
+        transition: transform .2s;
+        z-index: 2;
+      }
+
+      img.noHighlight {
+        transform: scale(80%);
+        opacity: 0.5;
+        z-index: 1;
       }
     }
   }

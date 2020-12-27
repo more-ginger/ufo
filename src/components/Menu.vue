@@ -36,10 +36,10 @@ export default {
 
       .selectors {
         position: absolute;
-        right: 0%;
+        right: 2.5%;
         font-family: $titles;
         display: inline-flex;
-        width: 50%;
+        // width: 50%;
 
         h3 {
           margin-left: 50px;

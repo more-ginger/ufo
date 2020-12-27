@@ -23,8 +23,8 @@ export default {
 @import './assets/style/global.scss';
 
 #app {
-  background-image: linear-gradient(0deg, #74638C 0%, #664398 0%, #1B0041 84%);
-  // background-color: #1B0041;
+  // background-image: linear-gradient(0deg, #74638C 0%, #664398 0%, #1B0041 84%);
+  background-color: #1B0041;
   color: #009777;
 }
 </style>

@@ -4,33 +4,52 @@
       <p class="label-title">All sightnings:</p>
     </div>
     <div class="filters">
-      <p class="filter" :class="active ? 'right': 'left'" v-on:click="active = !active">countries
+      <p class="filter" :class="active ? 'right': 'left'" v-on:click="active = !active">years
         <span>&#10132;</span>
       </p>
       <div class="years" :class="{visible: active === true}">
         <p v-for="(y, i) in years" :key="i" class="year">
-          <input type="checkbox">
+          <input type="checkbox" id="checkbox" v-model="checkedYears" :value="y">
           {{y}}
         </p>
       </div>
-      <p class="filter">years &#10132;</p>
+      <p class="filter">countries &#10132;</p>
       <p class="filter">duration &#10132;</p>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'Filters',
   data () {
     return {
       active: false
+      // checkedYears: []
     }
   },
   computed: {
-    ...mapState(['years'])
+    ...mapState(['years']),
+    checkedYears: {
+      get () {
+        return this.$store.state.checkedYears
+      },
+      set (value) {
+        this.$store.commit('FILTER_YEARS', value)
+      }
+    }
+  },
+  methods: {
+    ...mapActions([
+      'filterData'
+    ])
+  },
+  watch: {
+    checkedYears () {
+      this.filterData()
+    }
   }
 }
 </script>
@@ -55,10 +74,27 @@ export default {
 
     .filter {
       margin: auto 10px;
+      cursor: pointer;
 
-      & .left {
-        transform: rotate(90deg);
+      &.right {
+        span {
+          display: inline-block;
+          vertical-align: middle;
+          transition: transform .5s;
+        }
       }
+
+      &.left {
+        span {
+          -webkit-transform:rotate(180deg);
+          -moz-transform:rotate(180deg);
+          -o-transform:rotate(180deg);
+          display: inline-block;
+          vertical-align: middle;
+          transition: transform .5s;
+        }
+      }
+
     }
 
     .years {
