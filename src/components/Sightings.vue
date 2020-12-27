@@ -117,7 +117,7 @@ export default {
 
       img.noHighlight {
         transform: scale(80%);
-        opacity: 0.5;
+        opacity: 0.3;
         z-index: 1;
       }
     }
