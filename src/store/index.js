@@ -6,7 +6,6 @@ import events from 'dsv-loader!@/assets/data/converted.csv' // eslint-disable-li
 Vue.use(Vuex)
 
 const data = events.map(e => {
-  console.log(e.comments)
   return {
     comments: e.comments,
     country: e.country,
@@ -25,13 +24,17 @@ const groupedData = groupBy(data, function (d) {
 
 const years = uniq(data.map(d => { return d.year.toString() }))
 
+const countries = uniq(data.map(d => { return d.country }))
+
 export default new Vuex.Store({
   state: {
     data,
     groupedData,
     years,
+    countries,
     filteredData: groupedData,
-    checkedYears: years
+    checkedYears: [2010],
+    checkedCountries: countries
   },
   mutations: {
     FILTER_YEARS (state, value) {

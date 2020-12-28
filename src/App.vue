@@ -20,6 +20,7 @@ export default {
 
 <style lang="scss">
 @import './assets/style/normalize.css';
+@import './assets/style/tooltip.scss';
 @import './assets/style/global.scss';
 
 #app {

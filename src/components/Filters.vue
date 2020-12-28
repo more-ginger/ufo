@@ -13,8 +13,17 @@
           {{y}}
         </p>
       </div>
-      <p class="filter">countries &#10132;</p>
-      <p class="filter">duration &#10132;</p>
+      <p class="filter" :class="active ? 'right': 'left'" v-on:click="active = !active">
+        countries
+        <span>&#10132;</span>
+      </p>
+      <div class="countries" :class="{visible: active === true}">
+        <p v-for="(ca, c) in countries" :key="c" class="country">
+          <input type="checkbox" id="checkbox" v-model="checkedCountries" :value="ca">
+          {{ca}}
+        </p>
+      </div>
+      <!-- <p class="filter">duration &#10132;</p> -->
     </div>
   </div>
 </template>
@@ -31,13 +40,21 @@ export default {
     }
   },
   computed: {
-    ...mapState(['years']),
+    ...mapState(['years', 'countries']),
     checkedYears: {
       get () {
         return this.$store.state.checkedYears
       },
       set (value) {
         this.$store.commit('FILTER_YEARS', value)
+      }
+    },
+    checkedCountries: {
+      get () {
+        return this.$store.state.checkedCountries
+      },
+      set (value) {
+        this.$store.commit('FILTER_COUNTRIES', value)
       }
     }
   },
@@ -97,14 +114,14 @@ export default {
 
     }
 
-    .years {
+    .years, .countries {
       display: none;
 
       &.visible {
         display: inline-flex;
       }
 
-      .year {
+      .year, .country {
         margin-right: 10px;
       }
     }
