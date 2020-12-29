@@ -5,12 +5,15 @@
   display: block !important;
   max-width: 300px;
   z-index: 10000;
+  box-shadow: 5px 5px #f0f;
 
   .tooltip-inner {
     background: white;
     color: #009777;
-    padding: 5px 10px 4px;
-    font-family: $paragraphs;
+    padding: 20px 20px;
+    font-family: $titles;
+    font-size: 12px;
+    line-height: 20px;
   }
 
   .tooltip-arrow {
@@ -21,6 +24,7 @@
     margin: 5px;
     border-color: white;
     z-index: 1;
+    visibility: hidden;
   }
 
   &[x-placement^="top"] {
@@ -39,14 +43,14 @@
   }
 
   &[x-placement^="bottom"] {
-    margin-top: 5px;
+    margin-top: 30px;
 
     .tooltip-arrow {
       border-width: 0 5px 5px 5px;
       border-left-color: transparent !important;
       border-right-color: transparent !important;
       border-top-color: transparent !important;
-      top: -5px;
+      top: 50px;
       left: calc(50% - 5px);
       margin-top: 0;
       margin-bottom: 0;
@@ -54,7 +58,7 @@
   }
 
   &[x-placement^="right"] {
-    margin-left: 5px;
+    margin-left: 10px;
 
     .tooltip-arrow {
       border-width: 5px 5px 5px 0;
@@ -69,7 +73,7 @@
   }
 
   &[x-placement^="left"] {
-    margin-right: 5px;
+    margin-right: 10px;
 
     .tooltip-arrow {
       border-width: 5px 0 5px 5px;

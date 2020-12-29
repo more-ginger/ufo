@@ -33,8 +33,8 @@ export default new Vuex.Store({
     years,
     countries,
     filteredData: groupedData,
-    checkedYears: [2010],
-    checkedCountries: countries
+    checkedYears: ['2010'],
+    checkedCountry: null
   },
   mutations: {
     FILTER_YEARS (state, value) {
@@ -42,6 +42,9 @@ export default new Vuex.Store({
     },
     FILTER_DATA (state, value) {
       state.filteredData = value
+    },
+    FILTER_COUNTRIES (state, value) {
+      state.checkedCountry = value
     }
   },
   actions: {
@@ -49,7 +52,7 @@ export default new Vuex.Store({
       const raw = state.groupedData
       const showed = state.checkedYears
 
-      const filtered = Object.keys(raw)
+      const filtered = Object.keys(raw).sort()
         .filter(key => showed.includes(key))
         .reduce((obj, key) => {
           obj[key] = raw[key]
@@ -58,6 +61,21 @@ export default new Vuex.Store({
 
       commit('FILTER_DATA', filtered)
     }
+    // filterCountries ({ state, commit, dispatch }) {
+    //   let filtered = {}
+    //   dispatch('filterData')
+    //
+    //   if (state.checkedCountry !== null) {
+    //     forEach(state.filteredData, (year, i) => {
+    //       filtered[i] = filter(year,
+    //         function (d) {
+    //           return d.country === state.checkedCountry
+    //         })
+    //     })
+    //   } else { filtered = state.filteredData }
+    //
+    //   commit('FILTER_DATA', filtered)
+    // }
   },
   modules: {
   }

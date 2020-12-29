@@ -65,7 +65,7 @@ export default {
 
     .initial-paragraph {
       .introduction-text {
-        font-size: 24px;
+        font-size: 1.5em;
         letter-spacing: 0.46px;
         font-family: $paragraphs;
         column-count: 2;
