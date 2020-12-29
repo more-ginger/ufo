@@ -106,6 +106,14 @@ export default {
           filter: hue-rotate(130deg);
         }
 
+        img.ca-color {
+          filter: hue-rotate(200deg);
+        }
+
+        img.au-color {
+          filter: hue-rotate(250deg);
+        }
+
         img.nan-color {
           filter: grayscale(100%);
         }
@@ -121,16 +129,16 @@ export default {
           transition: transform .2s;
         }
 
-        &.noHighlight {
-          opacity: 0.3;
-        }
-
         &.invisible {
           opacity: 0.1;
         }
 
         &.visible {
           opacity: 1;
+        }
+
+        &.noHighlight {
+          opacity: 0.3;
         }
 
         img.glyph {

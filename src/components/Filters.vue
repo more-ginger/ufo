@@ -16,9 +16,9 @@
       <div class="filter" :class="active === 'countries' ? 'right': 'left'">
         <p v-on:click="active !== 'countries' ? active = 'countries' : active = ''">countries <span>&#10132;</span></p>
         <div class="countries" :class="{visible: active === 'countries'}">
-          <p v-for="(ca, c) in countries" :key="c" class="country">
-            <input type="radio" id="checkbox" v-model="checkedCountry" :value="ca">
-            {{ca}}
+          <p v-for="(co, c) in countries" :key="c" class="country" :class="`${co}-color`">
+            <input type="radio" id="checkbox" v-model="checkedCountry" :value="co">
+            {{co}}
           </p>
         </div>
         <div class="reset" :class="{visible: active === 'countries'}">
@@ -133,6 +133,29 @@ export default {
 
       .year, .country {
         margin-right: 10px;
+      }
+
+      .us-color {
+      }
+
+      .gb-color {
+        filter: hue-rotate(130deg);
+      }
+
+      .ca-color {
+        filter: hue-rotate(200deg);
+      }
+
+      .au-color {
+        filter: hue-rotate(250deg);
+      }
+
+      .nan-color {
+        filter: grayscale(100%);
+      }
+
+      .de-color {
+        filter: hue-rotate(50deg);
       }
     }
   }
