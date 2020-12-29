@@ -145,7 +145,7 @@ export default {
           display: inline-block;
           margin: 5px;
           width: 25px;
-          height: auto;
+          height: 25px;
           transition: transform .2s;
         }
 
