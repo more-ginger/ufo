@@ -20,8 +20,6 @@ const data = events.map(e => {
   return Date.parse(a.datetime) - Date.parse(b.datetime)
 })
 
-console.log(data)
-
 const groupedData = groupBy(data, function (d) {
   return d.year
 })

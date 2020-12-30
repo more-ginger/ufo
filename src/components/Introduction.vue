@@ -1,9 +1,6 @@
 <template>
   <div class="introduction">
     <div class="innerbody">
-      <div class="upper-menu">
-        <Menu />
-      </div>
       <div class="main-body">
         <!-- <h2 class="title">Introduction title</h2> -->
         <div class="initial-paragraph">
@@ -23,17 +20,18 @@
         </div>
         <img class="introduction-img" src="../assets/img/ufos.gif"/>
       </div>
+      <Sightings />
     </div>
   </div>
 </template>
 
 <script>
-import Menu from '../components/Menu.vue'
+import Sightings from '@/components/Sightings.vue'
 
 export default {
   name: 'Introduction',
   components: {
-    Menu
+    Sightings
   }
 }
 </script>
@@ -44,9 +42,9 @@ export default {
 
 .introduction {
   width: 100%;
-  height: 90vh;
 
   .main-body {
+    height: 68vh;
     .introduction-img {
       width: 40%;
       position: absolute;
@@ -65,7 +63,7 @@ export default {
 
     .initial-paragraph {
       .introduction-text {
-        font-size: 1.5em;
+        font-size: 1.2em;
         letter-spacing: 0.46px;
         font-family: $paragraphs;
         column-count: 2;
