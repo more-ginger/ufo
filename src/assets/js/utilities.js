@@ -25,9 +25,3 @@ export const traverseAndFlatten = function (currentNode, target, flattenedKey) {
   })
   return nested
 }
-
-export const flatten = function (obj) {
-  var flattenedObject = {}
-  traverseAndFlatten(obj, flattenedObject)
-  return flattenedObject
-}

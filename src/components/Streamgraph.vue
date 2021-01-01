@@ -3,6 +3,7 @@
     <div class="inner-container">
       <svg ref="vis">
         <g v-for="(ar, a) in area" :key="a">
+          <XAxis />
           <path :d="ar.area" :fill="ar.color"/>
         </g>
       </svg>
@@ -16,9 +17,13 @@ import { map, uniq } from 'lodash'
 import * as d3 from 'd3'
 import * as d3Collection from 'd3-collection'
 import { traverseAndFlatten } from '@/assets/js/utilities.js'
+import XAxis from './graph/XAxis.vue'
 
 export default {
   name: 'Streamgraph',
+  components: {
+    XAxis
+  },
   data () {
     return {
       svgWidth: 0,
@@ -29,12 +34,15 @@ export default {
     ...mapState(['data']),
     parser () { return d3.timeParse('%Y-%m-%d') },
     keys () { return uniq(map(this.data, (d) => { return d.shape })) },
-    nested () {
-      const newData = map(this.data, d => {
+    newData () {
+      return map(this.data, d => {
         const date = d.datetime.split(' ')
         d.datetime = date[0]
         return d
       })
+    },
+    nested () {
+      const { newData } = this
       const nested = d3Collection.nest()
         .key(function (d) { return d.datetime })
         .key(function (d) { return d.shape })
@@ -51,7 +59,7 @@ export default {
       return d3.stack()
         .keys(keys)
         .offset(d3.stackOffsetSilhouette)
-        .order(d3.stackOrderDescending)
+        .order(d3.stackOrderAscending)
     },
     x () {
       const { parser } = this
@@ -60,7 +68,7 @@ export default {
       return d3.scaleTime().domain(domain).range(range)
     },
     y () {
-      const domain = [-50, 50]
+      const domain = [-40, 40]
       const range = [this.svgHeight, 0]
       return d3.scaleLinear().domain(domain).range(range)
     },
@@ -74,6 +82,7 @@ export default {
         .x(d => x(this.parser(d.data.datetime)))
         .y0(d => y(d[0]))
         .y1(d => y(d[1]))
+        .curve(d3.curveStep)
     },
     area () {
       const { areaGenerator, stacker, nested } = this
@@ -118,9 +127,14 @@ export default {
     height: 92vh;
 
     svg {
-      width: 700%;
+      width: 1100%;
       height: 100%;
       background-color: #1B0041;
+
+      path {
+        stroke-width: 0.3;
+        stroke: #1B0041;
+      }
     }
   }
 }
