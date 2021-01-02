@@ -11,8 +11,13 @@
               activePath: activeShape === ar.id,
               inactivePath: activeShape !== ar.id & activeShape !== ''
               }">
-            <path :d="ar.area" :fill="ar.color" @mouseenter="activeShape = ar.id" @mouseleave="activeShape = ''"/>
+              <path
+              :d="ar.area"
+              :fill="ar.color"
+              @mouseenter="activeShape = ar.id" @mouseleave="activeShape = ''"
+              />
           </g>
+          <Labels />
         </g>
         <XAxis :data="newData" :scale="x" :sizes="[svgWidth, svgHeight]"/>
       </svg>
@@ -22,15 +27,20 @@
             <p
               v-for="(key, k) in keys"
               :key="k"
-              :class="area[k].id"
+              :class="
+                [area[k].id,
+                {
+                  activeLabel: activeShape === area[k].id,
+                  inactiveLabel:activeShape !== area[k].id & activeShape !== ''
+                  }]"
               @click="activeShape === '' ? activeShape = area[k].id : activeShape = ''"
             >
-              <span v-if="activeShape === area[k].id">x</span>{{ key }}
+              {{ key }}
             </p>
           </div>
           <h3>
-            Sighted UFOs according
-            to shape (Jan'2010 / Apr' 2014)
+            Sighted UFOs shapes over time according
+            to testimonies (Jan'2010 / Apr' 2014)
           </h3>
         </div>
       </div>
@@ -45,11 +55,13 @@ import * as d3 from 'd3'
 import * as d3Collection from 'd3-collection'
 import { traverseAndFlatten } from '@/assets/js/utilities.js'
 import XAxis from './graph/XAxis.vue'
+import Labels from './graph/Labels.vue'
 
 export default {
   name: 'Streamgraph',
   components: {
-    XAxis
+    XAxis,
+    Labels
   },
   data () {
     return {
@@ -119,7 +131,9 @@ export default {
     area () {
       const { areaGenerator, stacker, nested } = this
       const data = stacker(nested)
+      const values = []
       return map(data, (group, i) => {
+        values.push()
         return {
           id: this.keys[i],
           area: areaGenerator(group),
@@ -214,6 +228,11 @@ export default {
             font-size: 14px;
             margin-right: 0.8%;
 
+            &.activeLabel {
+              font-style: oblique;
+              text-decoration: underline;
+            }
+
             &.formation {
               color: rgb(0, 255, 198);
             }
@@ -282,10 +301,6 @@ export default {
               color: rgb(174, 81, 214);
             }
 
-            &.circle {
-              color: rgb(58, 197, 203);
-            }
-
             &.flash {
               color: rgb(185, 70, 215);
             }
@@ -308,6 +323,10 @@ export default {
 
             &.cone {
               color: rgb(243, 12, 221);
+            }
+
+            &.inactiveLabel {
+              color: white;
             }
           }
         }

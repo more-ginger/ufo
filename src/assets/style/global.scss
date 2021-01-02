@@ -5,6 +5,10 @@ $titles: 'Michroma', sans-serif;
 $paragraphs: 'Roboto Mono', monospace;
 
 body {
+  h1, h2, h3 {
+    font-family: $titles;
+  }
+  
   p {
     font-family: $paragraphs;
   }

@@ -43,6 +43,7 @@ line {
 }
 
 text {
+  font-size: 12px;
   font-family: $titles;
   fill: #009777;
 }
