@@ -4,8 +4,14 @@
       <svg ref="vis">
         <line x1="0" :x2="svgWidth" :y1="svgHeight / 2" :y2="svgHeight / 2" />
         <g class="paths">
-          <g v-for="(ar, a) in area" :key="a">
-            <path :d="ar.area" :fill="ar.color"/>
+          <g
+            v-for="(ar, a) in area"
+            :key="a"
+            :class="{
+              activePath: activeShape === ar.id,
+              inactivePath: activeShape !== ar.id & activeShape !== ''
+              }">
+            <path :d="ar.area" :fill="ar.color" @mouseenter="activeShape = ar.id" @mouseleave="activeShape = ''"/>
           </g>
         </g>
         <XAxis :data="newData" :scale="x" :sizes="[svgWidth, svgHeight]"/>
@@ -13,11 +19,19 @@
       <div class="legend-container">
         <div class="legend-inner">
           <div class="shapes">
-            <p v-for="(key, k) in keys" :key="k" :class="area[k].id">
-              {{ key }}
+            <p
+              v-for="(key, k) in keys"
+              :key="k"
+              :class="area[k].id"
+              @click="activeShape === '' ? activeShape = area[k].id : activeShape = ''"
+            >
+              <span v-if="activeShape === area[k].id">x</span>{{ key }}
             </p>
           </div>
-          <h3>Sighted UFOs according to shape (Jan'2010 / Apr' 2014)</h3>
+          <h3>
+            Sighted UFOs according
+            to shape (Jan'2010 / Apr' 2014)
+          </h3>
         </div>
       </div>
     </div>
@@ -44,7 +58,8 @@ export default {
       margins: {
         left: 30,
         right: 30
-      }
+      },
+      activeShape: ''
     }
   },
   computed: {
@@ -116,7 +131,6 @@ export default {
   mounted () {
     this.calcSizes()
     window.addEventListener('resize', this.calcSizes, false)
-    console.log(this.area)
   },
   updated () {
     this.calcSizes()
@@ -156,6 +170,19 @@ export default {
         stroke: #009777;
       }
 
+      .inactivePath {
+        path {
+          fill: white;
+          // opacity: 0.5;
+        }
+      }
+
+      .activePath {
+        path {
+          opacity: 1;
+        }
+      }
+
       path {
         stroke-width: 0.3;
         stroke: #1B0041;
@@ -181,7 +208,7 @@ export default {
         // display: inline-flex;
 
         .shapes {
-          display: inline-flex;
+          display: flex;
           p {
             cursor: pointer;
             font-size: 14px;
