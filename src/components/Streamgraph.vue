@@ -17,9 +17,10 @@
               @mouseenter="activeShape = ar.id" @mouseleave="activeShape = ''"
               />
           </g>
-          <Labels />
         </g>
-        <XAxis :data="newData" :scale="x" :sizes="[svgWidth, svgHeight]"/>
+        <g class="axis">
+          <XAxis :data="newData" :scale="x" :sizes="[svgWidth, svgHeight]"/>
+        </g>
       </svg>
       <div class="legend-container">
         <div class="legend-inner">
@@ -50,18 +51,16 @@
 
 <script>
 import { mapState } from 'vuex'
-import { map, uniq } from 'lodash'
+import { map } from 'lodash'
 import * as d3 from 'd3'
 import * as d3Collection from 'd3-collection'
 import { traverseAndFlatten } from '@/assets/js/utilities.js'
 import XAxis from './graph/XAxis.vue'
-import Labels from './graph/Labels.vue'
 
 export default {
   name: 'Streamgraph',
   components: {
-    XAxis,
-    Labels
+    XAxis
   },
   data () {
     return {
@@ -75,9 +74,8 @@ export default {
     }
   },
   computed: {
-    ...mapState(['data']),
+    ...mapState(['data', 'keys']),
     parser () { return d3.timeParse('%Y-%m-%d') },
-    keys () { return uniq(map(this.data, (d) => { return d.shape })) },
     newData () {
       return map(this.data, d => {
         const date = d.datetime.split(' ')
@@ -107,7 +105,7 @@ export default {
     },
     x () {
       const { parser } = this
-      const domain = [parser('2010-01-01'), parser('2014-05-08')]
+      const domain = [parser('2009-12-31'), parser('2014-05-08')]
       const range = [this.margins.left, this.svgWidth - this.margins.right * 2]
       return d3.scaleTime().domain(domain).range(range)
     },
@@ -128,12 +126,13 @@ export default {
         .y1(d => y(d[1]))
         .curve(d3.curveStep)
     },
+    stackedData () {
+      const { stacker, nested } = this
+      return stacker(nested)
+    },
     area () {
-      const { areaGenerator, stacker, nested } = this
-      const data = stacker(nested)
-      const values = []
-      return map(data, (group, i) => {
-        values.push()
+      const { areaGenerator, stackedData } = this
+      return map(stackedData, (group, i) => {
         return {
           id: this.keys[i],
           area: areaGenerator(group),
@@ -171,6 +170,7 @@ export default {
 .outer-container {
   width:100%;
   overflow-x: auto;
+  overflow-y: hidden;
     white-space: nowrap;
   .inner-container {
     height: 92vh;
@@ -205,6 +205,7 @@ export default {
 
     .legend-container {
       width: 100%;
+      white-space: wrap;
       bottom: 0;
       position: absolute;
       background-color: rgba(27, 0, 65, 0.5);

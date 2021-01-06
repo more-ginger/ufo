@@ -7,13 +7,54 @@
           <p></p>
         </div>
       </div>
+      <div class="entries-container">
+        <div class="entries-inner">
+          <div class="single-entry" v-for="(entry, e) in dictionary" :key="e">
+            <div>
+              <h2>{{entry.shape}}</h2>
+              <img :src="require(`../assets/img/shapes/${entry.path}`)"/>
+            </div>
+            <div class="comment-container">
+                <WorldMap :data="entry.entries"/>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import { groupBy, map } from 'lodash'
+import WorldMap from './graph/Map.vue'
+
 export default {
-  name: 'Dictionary'
+  name: 'Dictionary',
+  components: {
+    WorldMap
+  },
+  computed: {
+    ...mapState(['data', 'keys']),
+    shapes () {
+      return groupBy(this.data, function (d) { return d.shape })
+    },
+    dictionary () {
+      return map(this.shapes, (group, g) => {
+        return {
+          shape: g,
+          path: g !== 'changing' ? g + '.png' : g + '.gif',
+          entries: map(group, (d, i) => {
+            return {
+              longitude: d.longitude,
+              latitude: d.latitude,
+              comment: d.comments
+            }
+          })
+        }
+      })
+    }
+  }
 }
 </script>
 
@@ -22,8 +63,41 @@ export default {
 .outer-container {
   .inner-container {
     .introduction {
-      width: 70%;
+      width: 90%;
       margin: 0 auto;
+    }
+
+    .entries-container {
+      width: 90%;
+      margin: 0 auto;
+
+      .entries-inner {
+
+        .single-entry {
+          display: inline-flex;
+          // background-color: pink;
+          width: 100%;
+          height: 80vh;
+          border-bottom: 1px solid #009777;
+
+          img {
+            // background-color: lightblue;
+            // padding: 5%;
+            width: 300px;
+            height: 300px;
+          }
+
+          .comment-container {
+            margin-left: 5%;
+            // background-color: green;
+            width: 70%;
+
+            svg {
+              // background-color: blue;
+            }
+          }
+        }
+      }
     }
   }
 }
