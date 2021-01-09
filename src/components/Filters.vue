@@ -1,7 +1,7 @@
 <template>
   <div class="filter-menu">
     <div>
-      <p class="label-title">All sightnings:</p>
+      <p class="label-title">All sightnings + comments (2017 - 2020)</p>
     </div>
     <div class="filters">
       <div class="filter" :class="active === 'years' ? 'right': 'left'">
@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="filter">
-        <p v-on:click="active !== 'countries' ? active = 'countries' : active = ''">countries</p>
+        <p v-on:click="active !== 'countries' ? active = 'countries' : active = ''">country:</p>
         <div class="countries">
           <v-select class="style-chooser" :options="countries" v-model="checkedCountry"></v-select>
           <!-- <p v-for="(co, c) in countries" :key="c" class="country" :class="`${co}-color`">
@@ -94,6 +94,10 @@ export default {
   z-index: 1;
   border-bottom: 1px solid #009777;
 
+  .label-title {
+    font-family: $titles;
+  }
+
   .filters {
     margin: 0 10px;
     display: inline-flex;
@@ -126,6 +130,11 @@ export default {
         cursor: pointer;
       }
 
+    }
+
+    .filter {
+      border-left: 1px solid #009777;
+      padding-left: 20px;
     }
 
     .years, .reset {

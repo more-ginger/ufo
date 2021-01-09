@@ -15,7 +15,7 @@
               <img :src="require(`../assets/img/shapes/${entry.path}`)"/>
             </div>
             <div class="comment-container">
-                <WorldMap :data="entry.entries"/>
+                <WorldMap :data="dictionary"/>
             </div>
           </div>
         </div>
@@ -76,15 +76,14 @@ export default {
         .single-entry {
           display: inline-flex;
           // background-color: pink;
-          width: 100%;
-          height: 80vh;
-          border-bottom: 1px solid #009777;
+          width: 20%;
+          // height: 80vh;
 
           img {
             // background-color: lightblue;
             // padding: 5%;
-            width: 300px;
-            height: 300px;
+            width: 50px;
+            height: 50px;
           }
 
           .comment-container {

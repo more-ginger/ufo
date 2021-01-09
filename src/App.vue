@@ -96,14 +96,28 @@ export default {
 
   }
 
+  .style-chooser .vs__selected,
+  .style-chooser .vs__dropdown-option,
+  .style-chooser .vs__search {
+    color: #009777;
+    // vertical-align: bottom;
+  }
   .style-chooser .vs__search::placeholder,
   .style-chooser .vs__dropdown-toggle,
   .style-chooser .vs__dropdown-menu {
+    margin-top: 10px;
+    margin-left: 20px;
     background: #1B0041;
-    border: none;
+    border: 1px solid #009777;
     color: #009777;
-    text-transform: lowercase;
-    font-variant: small-caps;
+    min-width: 100px;
+    width: 250px;
+    font-family: $paragraphs;
+    font-size: 12px;
+  }
+
+  .style-chooser .vs__selected-options {
+    max-height: 50%;
   }
 
   .style-chooser .vs__clear,
