@@ -47,11 +47,13 @@ export default {
 @import './assets/style/normalize.css';
 @import './assets/style/tooltip.scss';
 @import './assets/style/global.scss';
+@import "vue-select/src/scss/vue-select.scss";
 
 #app {
   background-color: #1B0041;
   color: #009777;
   // width: 100%;
+
   .bar {
     padding-top: 5px;
     width: 100%;
@@ -92,6 +94,21 @@ export default {
   .outer-container {
     width: 100%;
 
+  }
+
+  .style-chooser .vs__search::placeholder,
+  .style-chooser .vs__dropdown-toggle,
+  .style-chooser .vs__dropdown-menu {
+    background: #1B0041;
+    border: none;
+    color: #009777;
+    text-transform: lowercase;
+    font-variant: small-caps;
+  }
+
+  .style-chooser .vs__clear,
+  .style-chooser .vs__open-indicator {
+    fill: #009777;
   }
 }
 </style>

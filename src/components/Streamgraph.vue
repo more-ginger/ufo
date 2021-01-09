@@ -105,12 +105,12 @@ export default {
     },
     x () {
       const { parser } = this
-      const domain = [parser('2009-12-31'), parser('2014-05-08')]
+      const domain = [parser('2016-12-25'), parser('2020-12-31')]
       const range = [this.margins.left, this.svgWidth - this.margins.right * 2]
       return d3.scaleTime().domain(domain).range(range)
     },
     y () {
-      const domain = [-40, 40]
+      const domain = [-50, 50]
       const range = [this.svgHeight, 0]
       return d3.scaleLinear().domain(domain).range(range)
     },

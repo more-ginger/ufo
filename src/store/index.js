@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { groupBy, uniq } from 'lodash'
-import events from 'dsv-loader!@/assets/data/converted.csv' // eslint-disable-line import/no-webpack-loader-syntax
+import events from 'dsv-loader!@/assets/data/sightnings_with_coords.csv' // eslint-disable-line import/no-webpack-loader-syntax
 import world from '@/assets/data/world.json' // eslint-disable-line import/no-webpack-loader-syntax
 
 Vue.use(Vuex)
@@ -9,10 +9,9 @@ Vue.use(Vuex)
 const data = events.map(e => {
   // console.log(e.shape, e.comments)
   return {
-    comments: e.comments,
+    comments: e.comment,
     country: e.country,
     datetime: e.datetime,
-    duration: +e['duration (seconds)'],
     shape: e.shape,
     latitude: +e.latitude,
     longitude: +e.longitude,
@@ -39,7 +38,7 @@ export default new Vuex.Store({
     countries,
     keys,
     filteredData: groupedData,
-    checkedYears: ['2010'],
+    checkedYears: ['2020'],
     checkedCountry: null
   },
   mutations: {

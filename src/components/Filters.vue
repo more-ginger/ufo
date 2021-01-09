@@ -13,24 +13,29 @@
           </p>
         </div>
       </div>
-      <div class="filter" :class="active === 'countries' ? 'right': 'left'">
-        <p v-on:click="active !== 'countries' ? active = 'countries' : active = ''">countries <span>&#10132;</span></p>
-        <div class="countries" :class="{visible: active === 'countries'}">
-          <p v-for="(co, c) in countries" :key="c" class="country" :class="`${co}-color`">
+      <div class="filter">
+        <p v-on:click="active !== 'countries' ? active = 'countries' : active = ''">countries</p>
+        <div class="countries">
+          <v-select class="style-chooser" :options="countries" v-model="checkedCountry"></v-select>
+          <!-- <p v-for="(co, c) in countries" :key="c" class="country" :class="`${co}-color`">
             <input type="radio" id="checkbox" v-model="checkedCountry" :value="co">
             {{co}}
-          </p>
+          </p> -->
         </div>
-        <div class="reset" :class="{visible: active === 'countries'}">
+        <!-- <div class="reset" :class="{visible: active === 'countries'}">
           <p v-on:click="checkedCountry = null">reset filter</p>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
 import { mapState, mapActions } from 'vuex'
+import vSelect from 'vue-select'
+
+Vue.component('v-select', vSelect)
 
 export default {
   name: 'Filters',
@@ -123,39 +128,12 @@ export default {
 
     }
 
-    .years, .countries, .reset {
+    .years, .reset {
       margin-left: 10px;
       display: none;
 
       &.visible {
         display: inline-flex;
-      }
-
-      .year, .country {
-        margin-right: 10px;
-      }
-
-      .us-color {
-      }
-
-      .gb-color {
-        filter: hue-rotate(130deg);
-      }
-
-      .ca-color {
-        filter: hue-rotate(200deg);
-      }
-
-      .au-color {
-        filter: hue-rotate(250deg);
-      }
-
-      .nan-color {
-        filter: grayscale(100%);
-      }
-
-      .de-color {
-        filter: hue-rotate(50deg);
       }
     }
   }

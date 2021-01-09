@@ -13,7 +13,7 @@
             {visible: checkedCountry === null}
           ]"
           class="glyph-container tooltip-target"
-          v-tooltip="{content: ev.time + ' / ' + ev.comment, offset: 25}"
+          v-tooltip="{content: ev.time + ' / ' + ev.country + ' / ' + ev.comment, offset: 25}"
         >
             <img class="glyph" @mouseenter="toggleHighlight(e, 'on')" :class="`${ev.country}-color`" :src="require(`../assets/img/shapes/${ev.shape}`)"/>
         </div>
@@ -99,28 +99,6 @@ export default {
 
       .glyph-container {
         display: inline-flex;
-        img.us-color {
-        }
-
-        img.gb-color {
-          filter: hue-rotate(130deg);
-        }
-
-        img.ca-color {
-          filter: hue-rotate(200deg);
-        }
-
-        img.au-color {
-          filter: hue-rotate(250deg);
-        }
-
-        img.nan-color {
-          filter: grayscale(100%);
-        }
-
-        img.de-color {
-          filter: hue-rotate(50deg);
-        }
 
         &.highlightImg {
           -webkit-transform: scale(4);
