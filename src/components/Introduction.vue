@@ -46,10 +46,10 @@ export default {
   .main-body {
     height: 68vh;
     .introduction-img {
-      width: 40%;
+      width: 30%;
       position: absolute;
       top: 40vh;
-      left: calc(98% - 40%);
+      left: calc(98% - 30%);
       mix-blend-mode: color-dodge;
     }
 

@@ -17,14 +17,13 @@
         <p v-on:click="active !== 'countries' ? active = 'countries' : active = ''">country:</p>
         <div class="countries">
           <v-select class="style-chooser" :options="countries" v-model="checkedCountry"></v-select>
-          <!-- <p v-for="(co, c) in countries" :key="c" class="country" :class="`${co}-color`">
-            <input type="radio" id="checkbox" v-model="checkedCountry" :value="co">
-            {{co}}
-          </p> -->
+          <p class="Africa-color">Africa</p>
+          <p class="Asia-color">Asia</p>
+          <p class="Europe-color">Europe</p>
+          <p class="NAmerica-color">N. America</p>
+          <p class="Oceania-color">Oceania</p>
+          <p class="SAmerica-color">S. America</p>
         </div>
-        <!-- <div class="reset" :class="{visible: active === 'countries'}">
-          <p v-on:click="checkedCountry = null">reset filter</p>
-        </div> -->
       </div>
     </div>
   </div>
@@ -135,6 +134,15 @@ export default {
     .filter {
       border-left: 1px solid #009777;
       padding-left: 20px;
+    }
+
+    .countries {
+      display: inline-flex;
+      p {
+        margin-top: 18px;
+        margin-left: 20px;
+        font-size: 12px;
+      }
     }
 
     .years, .reset {

@@ -15,7 +15,11 @@
           class="glyph-container tooltip-target"
           v-tooltip="{content: ev.time + ' / ' + ev.country + ' / ' + ev.comment, offset: 25}"
         >
-            <img class="glyph" @mouseenter="toggleHighlight(e, 'on')" :class="`${ev.country}-color`" :src="require(`../assets/img/shapes/${ev.shape}`)"/>
+            <img class="glyph"
+            @mouseenter="toggleHighlight(e, 'on')"
+            :class="`${ev.country}-color`"
+            :src="require(`../assets/img/shapes/${ev.shape}`)"
+            />
         </div>
       </div>
     </div>
