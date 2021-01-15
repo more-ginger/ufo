@@ -1,29 +1,37 @@
 <template>
-  <svg width="100%" height="100%" ref="vis">
-    <defs>
-    <clipPath id="svgPath">
-      <path :d="worldShape.world"/>
-    </clipPath>
-    </defs>
+  <svg width="100%" height="98%" ref="vis">
     <g>
-      <path :d="worldShape.world"/>
+      <path :d="worldShape.world" class="terrain"/>
       <path :d="worldShape.outline" class="outline"/>
       <path :d="worldShape.graticulate" class="graticulate"/>
     </g>
-    <g
-      v-for="(shape, s) in mapPoints"
-      :key="s" :class="shape.group"
-      >
+    <g v-if="selectedSchape !== 'default'">
       <path
-        v-for="(contour, c)
-        in shape.paths"
+        v-for="(contour, c) in generalContour"
         :key="`${c}-contour`"
-        :d="contour"
+        :d="contour.geometry"
+        :fill="`${contour.color}`"
+        :stroke="`${contour.stroke}`"
         class="contour"
-        />
-        <!-- <g v-for="(point, p) in shape.point" :key="p">
-          <circle :cx="point[0]" :cy="point[1]" r="1"/>
-        </g> -->
+      />
+    </g>
+    <g v-if="selectedSchape === 'default'">
+      <g
+        v-for="(shape, s) in mapPoints"
+        :key="s" :class="shape.group"
+        >
+        <path
+          v-for="(contour, c)
+          in shape.paths"
+          :key="`${c}-contour`"
+          :d="contour.geometry"
+          class="contour"
+          :fill="`${contour.color}`"
+          />
+          <!-- <g v-for="(point, p) in shape.point" :key="p">
+            <circle :cx="point[0]" :cy="point[1]" r="1"/>
+          </g> -->
+      </g>
     </g>
     <g>
     </g>
@@ -32,10 +40,13 @@
 
 <script>
 import { mapState } from 'vuex'
-import { geoEqualEarth, geoPath, geoGraticule10, geoMercator } from 'd3-geo'
+import { geoPath, geoGraticule10, geoNaturalEarth1 } from 'd3-geo'
+import { scaleLinear } from 'd3-scale'
+import { interpolateHcl } from 'd3-interpolate'
+import { rgb } from 'd3-color'
 import { contourDensity } from 'd3-contour'
 import { feature } from 'topojson-client'
-import { map } from 'lodash'
+import { map, filter } from 'lodash'
 
 export default {
   name: 'WorldMap',
@@ -52,10 +63,10 @@ export default {
   computed: {
     ...mapState(['world']),
     projection () {
-      return geoEqualEarth().scale(230).translate([this.svgWidth / 2, this.svgHeight / 2]).precision(0.1)
-    },
-    countourProj () {
-      return geoMercator().scale(190).translate([this.svgWidth / 2, this.svgHeight / 2]).precision(0.1)
+      return geoNaturalEarth1()
+        .scale(240)
+        .translate([this.svgWidth / 2, this.svgHeight / 2 + 10])
+        .precision(0.1)
     },
     pathConverter () {
       return geoPath().projection(this.projection)
@@ -63,27 +74,43 @@ export default {
     noProjectionPath () {
       return geoPath()
     },
-    contourPaths () {
-      return map(this.contour, (c, i) => {
-        return this.pathConverter(c)
+    colorScale () {
+      const domain = this.selectedShape === 'default' ? [1, 4] : [1, 2]
+      return scaleLinear().domain(domain)
+        .interpolate(interpolateHcl)
+        .range([rgb('#007AFF'), rgb('#FFF500')])
+    },
+    allPoints () {
+      return map(this.data, (d, i) => {
+        const points = map(d.entries, (entry, e) => {
+          return { longitude: entry.longitude, latitude: entry.latitude }
+        })
+        const flattened = points.flat()
+        return flattened
+      }).flat()
+    },
+    generalContour () {
+      const { allPoints, contourGenerator, noProjectionPath, colorScale } = this
+      const onlyCoords = filter(allPoints, point => { return point.latitude !== 0 & point.longitude !== 0 })
+      const contours = contourGenerator(onlyCoords)
+      return map(contours, (c) => {
+        return {
+          geometry: noProjectionPath(c),
+          color: colorScale(c.value),
+          stroke: c.value < 0.1 ? '#ff00de' : 'none'
+        }
       })
     },
     mapPoints () {
       return map(this.data, (d, i) => {
-        const contours = this.contourGenerator(d.entries)
+        const onlyCoords = filter(d.entries, point => { return point.latitude !== 0 & point.longitude !== 0 })
+        const contours = this.contourGenerator(onlyCoords)
         const paths = map(contours, (c) => {
-          return this.noProjectionPath(c)
+          return {
+            geometry: this.noProjectionPath(c),
+            color: this.colorScale(c.value)
+          }
         })
-
-        // const projectedPoints = map(d.entries, coord => { return this.countourProj([coord.longitude, coord.latitude]) })
-        // console.log('proj Points', projectedPoints)
-        // const contours = this.contourNoProj(projectedPoints)
-        // console.log('no proj', this.contourNoProj(d.entries))
-        // console.log('proj', this.contourGenerator(d.entries))
-        // const paths = map(contours, (c, i) => {
-        //   return this.emptyPath(c)
-        // })
-        // console.log(paths)
         return {
           group: d.shape,
           paths,
@@ -106,13 +133,15 @@ export default {
       return contourDensity()
         .x((d) => this.projection([d.longitude, d.latitude])[0])
         .y((d) => this.projection([d.longitude, d.latitude])[1])
-        .bandwidth(10)
-        .thresholds(30)
+        .bandwidth(5)
+        .thresholds(200)
+        .size([this.svgWidth, this.svgHeight])
     }
   },
   mounted () {
     this.calcMapSizes()
     window.addEventListener('resize', this.calcMapSizes, false)
+    console.log(this.generalContour)
   },
   updated () {
     this.calcMapSizes()
@@ -141,34 +170,38 @@ g {
   // height: inherit;
 
   circle {
-    stroke:  #7400ff;
-    fill: #ff00de;
+    fill: #009777;
+    stroke: none;
+  }
+
+  .contour {
+    // fill: #ff00de;
+    // stroke: none;
+    fill-opacity: 0.1;
     stroke-width: 0.5;
-    opacity: 0.5;
+    stroke-dasharray: 1 1;
   }
 
   path {
-    stroke:  #7400ff;
-    fill: white;
-    stroke-width: 0.2;
+    // stroke:  #7400ff;
+    // stroke-width: 0.2;
 
-    &.contour {
-      fill: #ff00de;
-      stroke: white;
-      fill-opacity: 0.1;
-      stroke-width: 0.5;
-      clip-path: url(#svgClipPathID);
+    &.terrain {
+      stroke:  #7400ff;
+      fill: #3a0087;
+      stroke-width: 0.1;
     }
 
     &.outline {
       stroke:  #7400ff;
       fill: none;
-      stroke-width: 2;
+      stroke-width: 1;
     }
 
     &.graticulate {
       stroke:  #7400ff;
-      stroke-width: 0.5;
+      stroke-width: 0.2;
+      stroke-dasharray: 4 2;
       fill: none;
     }
   }
