@@ -7,7 +7,7 @@
       <div class="map-controls-inner">
         <div class="legend-list">
           <div class="single-entry" v-for="(entry, e) in dictionary" :key="e">
-            <div class="single-inner">
+            <div class="single-inner" @click="selectedShape = entry.shape">
               <img :src="require(`../assets/img/shapes/${entry.path}`)" />
               <p>
                 {{ entry.shape }}
@@ -33,7 +33,7 @@ export default {
   },
   data () {
     return {
-      selectedShape: 'default'
+      selectedShape: 'cross'
     }
   },
   computed: {

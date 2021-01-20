@@ -5,7 +5,7 @@
       <path :d="worldShape.outline" class="outline"/>
       <path :d="worldShape.graticulate" class="graticulate"/>
     </g>
-    <g v-if="selectedSchape !== 'default'">
+    <g v-if="selectedShape === 'default'">
       <path
         v-for="(contour, c) in generalContour"
         :key="`${c}-contour`"
@@ -15,22 +15,22 @@
         class="contour"
       />
     </g>
-    <g v-if="selectedSchape === 'default'">
+    <g>
       <g
         v-for="(shape, s) in mapPoints"
         :key="s" :class="shape.group"
         >
-        <path
-          v-for="(contour, c)
-          in shape.paths"
-          :key="`${c}-contour`"
-          :d="contour.geometry"
-          class="contour"
-          :fill="`${contour.color}`"
-          />
-          <!-- <g v-for="(point, p) in shape.point" :key="p">
-            <circle :cx="point[0]" :cy="point[1]" r="1"/>
-          </g> -->
+        <g v-if="selectedShape === shape.group">
+          <path
+            v-for="(contour, c)
+            in shape.paths"
+            :key="`${c}-contour`"
+            :d="contour.geometry"
+            class="contour"
+            :fill="`${contour.color}`"
+            :stroke="`${contour.stroke}`"
+            />
+        </g>
       </g>
     </g>
     <g>
@@ -42,6 +42,7 @@
 import { mapState } from 'vuex'
 import { geoPath, geoGraticule10, geoNaturalEarth1 } from 'd3-geo'
 import { scaleLinear } from 'd3-scale'
+import { max, median } from 'd3-array'
 import { interpolateHcl } from 'd3-interpolate'
 import { rgb } from 'd3-color'
 import { contourDensity } from 'd3-contour'
@@ -75,7 +76,7 @@ export default {
       return geoPath()
     },
     colorScale () {
-      const domain = this.selectedShape === 'default' ? [1, 4] : [1, 2]
+      const domain = this.selectedShape === 'default' ? [1, 4] : [0, 2]
       return scaleLinear().domain(domain)
         .interpolate(interpolateHcl)
         .range([rgb('#007AFF'), rgb('#FFF500')])
@@ -105,10 +106,16 @@ export default {
       return map(this.data, (d, i) => {
         const onlyCoords = filter(d.entries, point => { return point.latitude !== 0 & point.longitude !== 0 })
         const contours = this.contourGenerator(onlyCoords)
+        const domain = [0, max(contours, (c) => { return c.value })]
+        const medianValue = median(contours, (c) => { return c.value })
+        const localScale = scaleLinear().domain(domain)
+          .interpolate(interpolateHcl)
+          .range([rgb('#007AFF'), rgb('#FFF500')])
         const paths = map(contours, (c) => {
           return {
             geometry: this.noProjectionPath(c),
-            color: this.colorScale(c.value)
+            color: localScale(c.value),
+            stroke: c.value < medianValue / 10 ? '#ff00de' : 'none'
           }
         })
         return {
@@ -141,15 +148,14 @@ export default {
   mounted () {
     this.calcMapSizes()
     window.addEventListener('resize', this.calcMapSizes, false)
-    console.log(this.generalContour)
   },
   updated () {
     this.calcMapSizes()
   },
-  // beforeDestroy () {
-  //   this.calcMapSizes()
-  //   window.removeEventListener('resize', this.calcMapSizes, false)
-  // },
+  beforeDestroy () {
+    this.calcMapSizes()
+    window.removeEventListener('resize', this.calcMapSizes, false)
+  },
   methods: {
     calcMapSizes: function () {
       const { vis: el } = this.$refs
@@ -166,8 +172,6 @@ export default {
 <style scoped lang="scss">
 @import '@/assets/style/global.scss';
 g {
-  // width: inherit;
-  // height: inherit;
 
   circle {
     fill: #009777;
@@ -175,16 +179,12 @@ g {
   }
 
   .contour {
-    // fill: #ff00de;
-    // stroke: none;
     fill-opacity: 0.1;
     stroke-width: 0.5;
     stroke-dasharray: 1 1;
   }
 
   path {
-    // stroke:  #7400ff;
-    // stroke-width: 0.2;
 
     &.terrain {
       stroke:  #7400ff;
