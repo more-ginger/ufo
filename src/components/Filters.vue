@@ -1,16 +1,17 @@
 <template>
   <div class="filter-menu">
     <div>
-      <p class="label-title">All sightnings + comments (2017 - 2020)</p>
+      <p class="label-title">All sightnings (2017 - 2020)</p>
     </div>
     <div class="filters">
-      <div class="filter" :class="active === 'years' ? 'right': 'left'">
-        <p v-on:click="active !== 'years' ? active = 'years' : active = ''">years <span>&#10132;</span></p>
+      <div class="filter">
+        <!-- <p v-on:click="active !== 'years' ? active = 'years' : active = ''">years</p> -->
         <div class="years" :class="{visible: active === 'years'}">
-          <p v-for="(y, i) in years" :key="i" class="year">
+          <v-select class="style-years" :options="years" v-model="checkedYears"></v-select>
+          <!-- <p v-for="(y, i) in years" :key="i" class="year">
             <input type="checkbox" id="checkbox" v-model="checkedYears" :value="y">
             {{y}}
-          </p>
+          </p> -->
         </div>
       </div>
       <div class="filter">
@@ -132,7 +133,6 @@ export default {
     }
 
     .filter {
-      border-left: 1px solid #009777;
       padding-left: 20px;
     }
 
@@ -146,7 +146,7 @@ export default {
     }
 
     .years, .reset {
-      margin-left: 10px;
+      margin-left: 0px;
       display: none;
 
       &.visible {

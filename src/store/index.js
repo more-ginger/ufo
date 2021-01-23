@@ -66,21 +66,6 @@ export default new Vuex.Store({
 
       commit('FILTER_DATA', filtered)
     }
-    // filterCountries ({ state, commit, dispatch }) {
-    //   let filtered = {}
-    //   dispatch('filterData')
-    //
-    //   if (state.checkedCountry !== null) {
-    //     forEach(state.filteredData, (year, i) => {
-    //       filtered[i] = filter(year,
-    //         function (d) {
-    //           return d.country === state.checkedCountry
-    //         })
-    //     })
-    //   } else { filtered = state.filteredData }
-    //
-    //   commit('FILTER_DATA', filtered)
-    // }
   },
   modules: {
   }

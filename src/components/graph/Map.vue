@@ -1,5 +1,12 @@
 <template>
   <svg width="100%" height="98%" ref="vis">
+    <defs>
+        <linearGradient id="MyGradient">
+          <stop offset="0%" :stop-color="colorScale(0)" />
+          <stop offset="50%" :stop-color="colorScale(2)" />
+          <stop offset="100%" :stop-color="colorScale(4)" />
+        </linearGradient>
+      </defs>
     <g>
       <path :d="worldShape.world" class="terrain"/>
       <path :d="worldShape.outline" class="outline"/>
@@ -15,7 +22,7 @@
         class="contour"
       />
     </g>
-    <g>
+    <g v-if="selectedShape !== 'default'">
       <g
         v-for="(shape, s) in mapPoints"
         :key="s" :class="shape.group"
@@ -34,6 +41,14 @@
       </g>
     </g>
     <g>
+      <rect
+        width="600"
+        height="20"
+        :x="this.svgWidth / 4"
+        :y="this.svgHeight - 20"
+        class="legend-bar"
+        rx="10"
+         />
     </g>
   </svg>
 </template>
@@ -66,7 +81,7 @@ export default {
     projection () {
       return geoNaturalEarth1()
         .scale(240)
-        .translate([this.svgWidth / 2, this.svgHeight / 2 + 10])
+        .translate([this.svgWidth / 2 - 50, this.svgHeight / 2 + 10])
         .precision(0.1)
     },
     pathConverter () {
@@ -76,7 +91,7 @@ export default {
       return geoPath()
     },
     colorScale () {
-      const domain = this.selectedShape === 'default' ? [1, 4] : [0, 2]
+      const domain = [1, 4]
       return scaleLinear().domain(domain)
         .interpolate(interpolateHcl)
         .range([rgb('#007AFF'), rgb('#FFF500')])
@@ -115,7 +130,7 @@ export default {
           return {
             geometry: this.noProjectionPath(c),
             color: localScale(c.value),
-            stroke: c.value < medianValue / 10 ? '#ff00de' : 'none'
+            stroke: c.value < medianValue / 50 ? '#ff00de' : 'none'
           }
         })
         return {
@@ -172,6 +187,10 @@ export default {
 <style scoped lang="scss">
 @import '@/assets/style/global.scss';
 g {
+
+  .legend-bar {
+    fill: url(#MyGradient);
+  }
 
   circle {
     fill: #009777;

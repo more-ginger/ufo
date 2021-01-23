@@ -8,12 +8,12 @@
           :key="`${e}-event`"
           :class="[
             {highlightImg: highlight === e},
-            {noHighlight: highlight !== e && interaction === 'on'},
-            {invisible: checkedCountry !== ev.country | checkedCountry === null },
+            {noHighlight: highlight !== e && interaction === 'on' && checkedCountry === null},
+            {invisible: checkedCountry !== ev.country && checkedCountry !== null },
             {visible: checkedCountry === null}
           ]"
           class="glyph-container tooltip-target"
-          v-tooltip="{content: ev.time + ' / ' + ev.country + ' / ' + ev.comment, offset: 25}"
+          v-tooltip="{content: ev.time + ' / ' + ev.country + ' / ' + ev.comment, offset: 50}"
         >
             <img class="glyph"
             @mouseenter="toggleHighlight(e, 'on')"
@@ -106,13 +106,14 @@ export default {
         display: inline-flex;
 
         &.highlightImg {
-          -webkit-transform: scale(4);
-          -moz-transform: scale(4);
-          -o-transform: scale(4);
+          -webkit-transform: scale(3);
+          -moz-transform: scale(3);
+          -o-transform: scale(3);
           transition: transform .2s;
         }
 
         &.invisible {
+          pointer-events: none;
           opacity: 0.1;
         }
 

@@ -7,11 +7,14 @@
       <div class="map-controls-inner">
         <div class="legend-list">
           <div class="single-entry" v-for="(entry, e) in dictionary" :key="e">
-            <div class="single-inner" @click="selectedShape = entry.shape">
-              <img :src="require(`../assets/img/shapes/${entry.path}`)" />
+            <div
+              class="single-inner"
+              @click="changeSelection(entry.shape)"
+              :class="{active: selectedShape === entry.shape}">
               <p>
                 {{ entry.shape }}
               </p>
+              <img :src="require(`../assets/img/shapes/${entry.path}`)" />
             </div>
           </div>
         </div>
@@ -33,7 +36,7 @@ export default {
   },
   data () {
     return {
-      selectedShape: 'cross'
+      selectedShape: 'default'
     }
   },
   computed: {
@@ -58,6 +61,15 @@ export default {
         return a - b
       })
     }
+  },
+  methods: {
+    changeSelection (current) {
+      if (current === this.selectedShape) {
+        this.selectedShape = 'default'
+      } else if (current !== 'default') {
+        this.selectedShape = current
+      }
+    }
   }
 }
 </script>
@@ -66,7 +78,7 @@ export default {
 <style scoped lang="scss">
 .outer-container {
   width: 100%;
-  height: calc(100vh - 65px);
+  height: calc(100vh - 63px);
 
   .inner-container {
     margin: 0 auto;
@@ -75,40 +87,52 @@ export default {
   }
 
   .map-controls {
+    overflow: hidden;
     position: absolute;
     bottom: 2%;
-    left: 1%;
+    right: 1%;
 
     .map-controls-inner {
-      border: 0.1px solid #7400ff;
-      background-color: #1B0041;
-      box-shadow: -5px 5px #7400ff;
+      position: relative;
 
       .legend-list {
-        width: 310px;
-        height: 240px;
+        width: 140px;
+        height: 680px;
         overflow-y: scroll;
 
         .single-entry {
           cursor: pointer;
-          padding-left: 20px;
-          padding-top: 20px;
-          border-bottom: 1px dashed #009777;
+          padding-right: 10px;
+          padding-top: 10px;
+          text-align: right;
 
           .single-inner {
             display: inline-flex;
 
+            &.active {
+              filter: hue-rotate(250deg);
+            }
+
             p {
-              margin-top: 0;
-              margin-left: 10px;
-              font-size: 25px;
+              visibility: hidden;
+              // margin-top: 0;
+              margin-right: 10px;
+              font-size: 12px;
             }
 
             img {
+              border-bottom: 1px dashed #009777;
+              padding-bottom: 10px;
               vertical-align: middle;
-              width: 30px;
-              height: 30px;
+              width: 35px;
+              height: 35px;
             }
+          }
+        }
+
+        .single-entry:hover {
+          p {
+            visibility: visible;
           }
         }
       }

@@ -1,0 +1,20 @@
+<template>
+  <div class="outer-container">
+    <div>I am loading</div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'LoadingScreen'
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped lang="scss">
+ .outer-container {
+   width: 100%;
+   height: 100vh;
+   background-color: blue;
+ }
+</style>

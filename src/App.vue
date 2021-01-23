@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+    <LoadingScreen v-if="isLoading" />
+    <div class="content" v-else>
     <div class="bar">
       <div class="inner-bar">
         <div class="labels-container">
@@ -14,11 +16,13 @@
     </div>
     <router-view></router-view>
   </div>
+</div>
 </template>
 
 <script>
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import LoadingScreen from './components/LoadingScreen.vue' // eslint-disable-line
 import Introduction from './components/Introduction.vue'
 import Streamgraph from './components/Streamgraph.vue'
 import Dictionary from './components/Dictionary.vue'
@@ -39,7 +43,20 @@ const router = new VueRouter({
 
 export default {
   name: 'App',
-  router
+  router,
+  components: {
+    LoadingScreen
+  },
+  data () {
+    return {
+      isLoading: true
+    }
+  },
+  mounted () {
+    setTimeout(() => {
+      this.isLoading = false
+    }, 1000)
+  }
 }
 </script>
 
@@ -50,6 +67,9 @@ export default {
 @import "vue-select/src/scss/vue-select.scss";
 
 #app {
+  ::-webkit-scrollbar {
+    display: none;
+  }
   background-color: #1B0041;
   color: #009777;
   // width: 100%;
@@ -96,12 +116,17 @@ export default {
 
   }
 
-  .style-chooser .vs__selected,
-  .style-chooser .vs__dropdown-option,
-  .style-chooser .vs__search {
+  .style-chooser .vs__selected, .style-years .vs__selected,
+  .style-chooser .vs__dropdown-option, .style-years .vs__dropdown-option,
+  .style-chooser {
     color: #009777;
     // vertical-align: bottom;
   }
+
+  .style-years .vs__search {
+    visibility: none;
+  }
+
   .style-chooser .vs__search::placeholder,
   .style-chooser .vs__dropdown-toggle,
   .style-chooser .vs__dropdown-menu {
@@ -111,17 +136,29 @@ export default {
     border: 1px solid #009777;
     color: #009777;
     min-width: 100px;
-    width: 250px;
+    width: 200px;
     font-family: $paragraphs;
     font-size: 12px;
   }
 
-  .style-chooser .vs__selected-options {
+  .style-years .vs__search::placeholder,
+  .style-years .vs__dropdown-toggle,
+  .style-years .vs__dropdown-menu {
+    // margin-top: 10px;
+    // margin-left: 20px;
+    background: #1B0041;
+    border: 1px solid #009777;
+    color: #009777;
+    font-family: $paragraphs;
+    font-size: 12px;
+  }
+
+  .style-chooser .vs__selected-options, .style-years .vs__selected-options {
     max-height: 50%;
   }
 
-  .style-chooser .vs__clear,
-  .style-chooser .vs__open-indicator {
+  .style-chooser .vs__clear, .style-years .vs__clear,
+  .style-chooser .vs__open-indicator, .style-years .vs__open-indicator {
     fill: #009777;
   }
 }
