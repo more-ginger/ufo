@@ -5,11 +5,19 @@
     <div class="bar">
       <div class="inner-bar">
         <div class="labels-container">
-          <router-link to="/"><h3 class="title">we still believe</h3></router-link>
+          <router-link to="/">
+            <h3 class="title">we still believe</h3>
+          </router-link>
           <div class="selectors">
-            <router-link to="/dictionary"><h3>all shapes</h3></router-link>
-            <router-link to="/chronology"><h3>in chronological order</h3></router-link>
-            <router-link to="/submit"><img src="@/assets/img/report-icon.png"/></router-link>
+            <router-link to="/dictionary">
+              <h3>all shapes</h3>
+            </router-link>
+            <router-link to="/chronology">
+              <h3>in chronological order</h3>
+            </router-link>
+            <router-link to="/submit">
+              <img class="submit"/>
+            </router-link>
           </div>
         </div>
       </div>
@@ -85,6 +93,15 @@ export default {
       .labels-container {
         display: inline-flex;
 
+        .router-link-exact-active {
+          h3 {
+            text-decoration-line: underline;
+            text-decoration-style: solid;
+            text-decoration-color: #7400ff;
+            text-decoration-thickness: 5px;
+          }
+        }
+
         .selectors {
           position: absolute;
           right: 2.5%;
@@ -96,11 +113,17 @@ export default {
             margin-left: 50px;
           }
 
-          img {
+          .submit {
+            content: url("./assets/img/eye-report.png");
             margin-left: 50px;
-            padding-top: 20px;
-            width: auto;
-            height: 20px;
+            // padding-top: 20px;
+            width: 60px;
+            height: 60px;
+          }
+
+          .submit:hover {
+            content: url("./assets/img/report-icon.gif");
+            animation: color 2s infinite reverse ease-in-out;
           }
         }
 

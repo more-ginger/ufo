@@ -6,7 +6,7 @@
     <div class="filters">
       <div class="filter">
         <!-- <p v-on:click="active !== 'years' ? active = 'years' : active = ''">years</p> -->
-        <div class="years" :class="{visible: active === 'years'}">
+        <div class="years">
           <v-select class="style-years" :options="years" v-model="checkedYears"></v-select>
           <!-- <p v-for="(y, i) in years" :key="i" class="year">
             <input type="checkbox" id="checkbox" v-model="checkedYears" :value="y">
@@ -147,7 +147,7 @@ export default {
 
     .years, .reset {
       margin-left: 0px;
-      display: none;
+      // display: none;
 
       &.visible {
         display: inline-flex;

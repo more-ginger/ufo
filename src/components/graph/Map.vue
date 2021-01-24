@@ -80,7 +80,7 @@ export default {
     ...mapState(['world']),
     projection () {
       return geoNaturalEarth1()
-        .scale(240)
+        .scale(230)
         .translate([this.svgWidth / 2 - 50, this.svgHeight / 2 + 10])
         .precision(0.1)
     },
