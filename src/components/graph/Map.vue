@@ -45,7 +45,7 @@
         width="600"
         height="20"
         :x="this.svgWidth / 4"
-        :y="this.svgHeight - 20"
+        :y="this.svgHeight - 30"
         class="legend-bar"
         rx="10"
          />
@@ -80,7 +80,7 @@ export default {
     ...mapState(['world']),
     projection () {
       return geoNaturalEarth1()
-        .scale(230)
+        .scale(220)
         .translate([this.svgWidth / 2 - 50, this.svgHeight / 2 + 10])
         .precision(0.1)
     },

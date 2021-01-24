@@ -143,7 +143,6 @@ export default {
   .style-chooser .vs__dropdown-option, .style-years .vs__dropdown-option,
   .style-chooser {
     color: #009777;
-    // vertical-align: bottom;
   }
 
   .style-years .vs__search {

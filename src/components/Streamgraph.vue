@@ -14,7 +14,7 @@
               <path
               :d="ar.area"
               :fill="ar.color"
-              @mouseenter="activeShape = ar.id" @mouseleave="activeShape = ''"
+              @mouseenter="toggleColor(ar.id)" @mouseleave="toggleColor('')"
               />
           </g>
         </g>
@@ -28,13 +28,14 @@
             <p
               v-for="(key, k) in keys"
               :key="k"
+              :style="`color: ${area[k].color};`"
               :class="
                 [area[k].id,
                 {
                   activeLabel: activeShape === area[k].id,
                   inactiveLabel:activeShape !== area[k].id & activeShape !== ''
                   }]"
-              @click="activeShape === '' ? activeShape = area[k].id : activeShape = ''"
+              @click="toggleColor(area[k].id)"
             >
               {{ key }}
             </p>
@@ -159,6 +160,13 @@ export default {
       const svgHeight = el.clientHeight || el.parentNode.clientHeight
       this.svgWidth = Math.max(svgWidth, 500)
       this.svgHeight = Math.max(svgHeight, 500)
+    },
+    toggleColor (value) {
+      if (this.activeShape !== value) {
+        this.activeShape = value
+      } else {
+        this.activeShape = ''
+      }
     }
   }
 }
@@ -187,7 +195,6 @@ export default {
       .inactivePath {
         path {
           fill: white;
-          // opacity: 0.5;
         }
       }
 
@@ -232,98 +239,6 @@ export default {
             &.activeLabel {
               font-style: oblique;
               text-decoration: underline;
-            }
-
-            &.formation {
-              color: rgb(0, 255, 198);
-            }
-
-            &.light {
-              color: rgb(12, 243, 199);
-            }
-
-            &.other {
-              color: rgb(23, 232, 200);
-            }
-
-            &.sphere {
-              color: rgb(35, 220, 201);
-            }
-
-            &.sphere {
-              color: rgb(35, 220, 201);
-            }
-
-            &.triangle {
-              color: rgb(46, 209, 202);
-            }
-
-            &.circle {
-              color: rgb(58, 197, 203);
-            }
-
-            &.diamond {
-              color: rgb(70, 185, 205);
-            }
-
-            &.fireball {
-              color: rgb(81, 174, 206);
-            }
-
-            &.oval {
-              color: rgb(93, 162, 207);
-            }
-
-            &.disk {
-              color: rgb(104, 151, 208);
-            }
-
-            &.unknown {
-              color: rgb(116, 139, 209);
-            }
-
-            &.chevron {
-              color: rgb(128, 128, 210);
-            }
-
-            &.nan {
-              color: rgb(139, 116, 211);
-            }
-
-            &.changing {
-              color: rgb(151, 104, 212);
-            }
-
-            &.rectangle {
-              color: rgb(162, 93, 213);
-            }
-
-            &.cross {
-              color: rgb(174, 81, 214);
-            }
-
-            &.flash {
-              color: rgb(185, 70, 215);
-            }
-
-            &.cigar {
-              color: rgb(197, 58, 217);
-            }
-
-            &.teardrop {
-              color: rgb(209, 46, 218);
-            }
-
-            &.cylinder {
-              color: rgb(220, 35, 219);
-            }
-
-            &.egg {
-              color: rgb(232, 23, 220);
-            }
-
-            &.cone {
-              color: rgb(243, 12, 221);
             }
 
             &.inactiveLabel {
