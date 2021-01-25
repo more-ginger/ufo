@@ -29,7 +29,7 @@ export default {
 
      .loader {
        margin: 0;
-       padding-top: 35%;
+       padding-top: 35vh;
        text-align: center;
 
        img {

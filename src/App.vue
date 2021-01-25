@@ -80,7 +80,6 @@ export default {
   }
   background-color: #1B0041;
   color: #009777;
-  // width: 100%;
 
   .bar {
     padding-top: 5px;
@@ -107,7 +106,6 @@ export default {
           right: 2.5%;
           font-family: $titles;
           display: inline-flex;
-          // width: 50%;
 
           h3 {
             margin-left: 50px;
@@ -116,7 +114,6 @@ export default {
           .submit {
             content: url("./assets/img/eye-report.png");
             margin-left: 50px;
-            // padding-top: 20px;
             width: 60px;
             height: 60px;
           }
