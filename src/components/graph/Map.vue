@@ -40,13 +40,19 @@
         </g>
       </g>
     </g>
-    <g>
+    <g class="legend">
+      <text
+        :x="this.svgWidth / 2.2"
+        :y="this.svgHeight - 50"
+        text-anchor="middle"
+        >Density of overall sightnings</text>
       <rect
         width="600"
         height="20"
         :x="this.svgWidth / 4"
-        :y="this.svgHeight - 30"
+        :y="this.svgHeight - 40"
         class="legend-bar"
+        stroke="#7400ff"
         rx="10"
          />
     </g>
@@ -81,7 +87,7 @@ export default {
     projection () {
       return geoNaturalEarth1()
         .scale(220)
-        .translate([this.svgWidth / 2 - 50, this.svgHeight / 2 + 10])
+        .translate([this.svgWidth / 2 - 50, this.svgHeight / 2 + 0])
         .precision(0.1)
     },
     pathConverter () {
@@ -113,6 +119,7 @@ export default {
         return {
           geometry: noProjectionPath(c),
           color: colorScale(c.value),
+          domain: [1, 4],
           stroke: c.value < 0.1 ? '#ff00de' : 'none'
         }
       })
@@ -130,6 +137,7 @@ export default {
           return {
             geometry: this.noProjectionPath(c),
             color: localScale(c.value),
+            domain,
             stroke: c.value < medianValue / 50 ? '#ff00de' : 'none'
           }
         })
@@ -201,6 +209,14 @@ g {
     fill-opacity: 0.1;
     stroke-width: 0.5;
     stroke-dasharray: 1 1;
+  }
+
+  &.legend {
+
+    text {
+      fill: #009777;
+      font-family: $paragraphs;
+    }
   }
 
   path {

@@ -1,6 +1,21 @@
 <template>
   <div class="outer-container">
     <div class="inner-container">
+      <div class="text-paragraph">
+        <div class="inner-text">
+          An unidentified flying object (UFO) is any aerial phenomenon that
+          cannot immediately be identified or explained. From the beginning of
+          1900 <span>more than 80.000 UFOs sightings have been reported</span>.
+          In August 2020 the Pentagon decided to form a new body to monitor these
+          mysterious events <span><a href="https://www.theguardian.com/us-news/2020/aug/15/us-department-defense-ufo-taskforce">(source)</a></span>.
+          I decided to visualize them, starting from 2010. Each sightning is represented
+          as a glyph, based on the shape of these mysterious flying objects: blinking lights,
+          crosses, cylinders, mutable structures are just some of the weird thigs reported. Some
+          entries even have comments and testimonies describing the event and the object in detail.
+          Some others are crooked and incomplete. Here each one of them can be browsed and geo-located.
+          <span>We still believe. We want to believe. We are not alone in this universe.</span>
+        </div>
+      </div>
       <svg ref="vis">
         <line x1="0" :x2="svgWidth" :y1="svgHeight / 2" :y2="svgHeight / 2" />
         <g class="paths">
@@ -179,12 +194,30 @@ export default {
   width:100%;
   overflow-x: auto;
   overflow-y: hidden;
-    white-space: nowrap;
+  white-space: nowrap;
+
   .inner-container {
+
+    display: inline-flex;
+    width: 1100vw;
     height: 92vh;
 
+    .text-paragraph {
+      border-right: 1px solid #009777;
+      width: 2%;
+
+      .inner-text {
+        padding: 10px;
+        font-family: $paragraphs;
+        white-space: normal;
+        width: 90%;
+        height: 200%;
+        overflow-y: hidden;
+      }
+    }
+
     svg {
-      width: 1100%;
+      width: 98%;
       height: 100%;
       background-color: #1B0041;
 
@@ -215,7 +248,7 @@ export default {
       white-space: wrap;
       bottom: 0;
       position: absolute;
-      background-color: rgba(27, 0, 65, 0.5);
+      background-color: rgba(27, 0, 65, 0.9);
       border-top: 1px solid #009777;
 
       .legend-inner {
