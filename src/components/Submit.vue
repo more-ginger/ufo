@@ -47,13 +47,11 @@ export default {
         font-size: 1.2em;
         letter-spacing: 0.46px;
         font-family: $paragraphs;
-        // column-count: 2;
-        // column-gap: 40px;
 
         span {
           text-decoration-line: underline;
           text-decoration-style: solid;
-          text-decoration-color: #7400ff;
+          text-decoration-color: #009777;
           text-decoration-thickness: 5px;
         }
       }

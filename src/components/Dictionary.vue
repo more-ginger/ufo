@@ -43,7 +43,6 @@
 </template>
 
 <script>
-// eslint-disable
 import { mapState } from 'vuex'
 import { groupBy, map } from 'lodash'
 import WorldMap from './graph/Map.vue'

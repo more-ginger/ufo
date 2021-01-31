@@ -16,7 +16,7 @@
               <h3>in chronological order</h3>
             </router-link>
             <router-link to="/submit">
-              <img class="submit"/>
+              <img class="submit" src="./assets/img/eye-report.png"/>
             </router-link>
           </div>
         </div>
@@ -111,7 +111,8 @@ export default {
             margin-left: 50px;
           }
 
-          .submit {
+          .submit, .submit:after {
+            src: "./assets/img/eye-report.png";
             content: url("./assets/img/eye-report.png");
             margin-left: 50px;
             width: 60px;
@@ -163,8 +164,6 @@ export default {
   .style-years .vs__search::placeholder,
   .style-years .vs__dropdown-toggle,
   .style-years .vs__dropdown-menu {
-    // margin-top: 10px;
-    // margin-left: 20px;
     background: #1B0041;
     border: 1px solid #009777;
     color: #009777;

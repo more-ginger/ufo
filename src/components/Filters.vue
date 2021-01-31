@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="filter">
-        <p v-on:click="active !== 'countries' ? active = 'countries' : active = ''">country:</p>
+        <p>country:</p>
         <div class="countries">
           <v-select class="style-chooser" :options="countries" v-model="checkedCountry"></v-select>
           <p class="Africa-color">Africa</p>
@@ -34,11 +34,6 @@ Vue.component('v-select', vSelect)
 
 export default {
   name: 'Filters',
-  data () {
-    return {
-      active: ''
-    }
-  },
   computed: {
     ...mapState(['years', 'countries']),
     checkedYears: {
@@ -97,7 +92,6 @@ export default {
     .filter {
       display: inline-flex;
       margin: auto 10px;
-      cursor: pointer;
 
       &.right {
         span {
@@ -117,11 +111,6 @@ export default {
           transition: transform .5s;
         }
       }
-
-      .reset {
-        cursor: pointer;
-      }
-
     }
 
     .filter {
