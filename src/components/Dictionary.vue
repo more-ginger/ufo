@@ -1,19 +1,22 @@
 <template>
   <div class="outer-container">
-    <div  @click="activeOverlay = !activeOverlay">Activate text</div>
     <div class="text-paragraph" :class="{'slide': activeOverlay}">
       <div class="inner-text">
-        An unidentified flying object (UFO) is any aerial phenomenon that
-        cannot immediately be identified or explained. From the beginning of
-        1900 <span>more than 80.000 UFOs sightings have been reported</span>.
-        In August 2020 the Pentagon decided to form a new body to monitor these
-        mysterious events <span><a href="https://www.theguardian.com/us-news/2020/aug/15/us-department-defense-ufo-taskforce">(source)</a></span>.
-        I decided to visualize them, starting from 2010. Each sightning is represented
-        as a glyph, based on the shape of these mysterious flying objects: blinking lights,
-        crosses, cylinders, mutable structures are just some of the weird thigs reported. Some
-        entries even have comments and testimonies describing the event and the object in detail.
-        Some others are crooked and incomplete. Here each one of them can be browsed and geo-located.
-        <span>We still believe. We want to believe. We are not alone in this universe.</span>
+        <div class="paragraph-text">
+          <p>
+            Obviously most of the sightnings happen in the US and/or Canada.
+            This is possibly due to the
+          </p>
+          <p>
+            To explore popular sightnings sites scroll and pick a shape from the
+            right side list.
+          </p>
+        </div>
+        <div  @click="activeOverlay = !activeOverlay" class="activator">
+          <p>
+            Where do most of the sightnings happen? [Read]
+          </p>
+        </div>
       </div>
     </div>
     <div class="inner-container">
@@ -75,12 +78,11 @@ export default {
           })
         }
       }).sort(function (a, b) {
-        return a - b
+        if (a.shape < b.shape) { return -1 }
+        if (a.shape > b.shape) { return 1 }
+        return 0
       })
     }
-  },
-  mounted () {
-    this.activeOverlay = false
   },
   methods: {
     changeSelection (current) {
@@ -109,18 +111,35 @@ export default {
     }
     z-index:1;
     position: absolute;
-    left: -30%;
+    left: -385px;
     transition: left 1s;
     .inner-text {
       font-family: $paragraphs;
-      background: white;
-      box-shadow: 5px 5px #f0f;
-      width: 300px;
-      height: 70vh;
-      margin-left: 10px;
-      margin-bottom: 15px;
-      // bottom: 10px;
-      padding: 10px;
+      background: rgba(27, 0, 65, 0.7);
+      border-right: 1px solid #009777;
+      width: 400px;
+      height: calc(100vh - 70px);
+      padding-left: 10px;
+      padding-right: 10px;
+
+      display: inline-flex;
+
+      .activator {
+        border-left: 1px solid #009777;
+        padding-left: 10px;
+        padding-right: 15px;
+        cursor: pointer;
+
+        p {
+          font-family: $titles;
+          transform: rotate(90deg);
+          text-align: left;
+          transform-origin: bottom;
+          width: 0;
+          margin: 0;
+          white-space: nowrap;
+        }
+      }
     }
   }
 
@@ -168,7 +187,6 @@ export default {
 
             p {
               visibility: hidden;
-              // margin-top: 0;
               margin-right: 10px;
               font-size: 12px;
             }

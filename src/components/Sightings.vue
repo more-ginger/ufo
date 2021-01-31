@@ -99,8 +99,6 @@ export default {
 
     div.year-container {
       padding-top: 20px;
-      // margin-bottom: 20px;
-      // border-top: 1px solid #009777;
 
       .glyph-container {
         display: inline-flex;

@@ -42,15 +42,15 @@
     </g>
     <g class="legend">
       <text
-        :x="this.svgWidth / 2.2"
-        :y="this.svgHeight - 50"
+        :x="this.svgWidth / 2.1"
+        :y="this.svgHeight - 70"
         text-anchor="middle"
         >Density of overall sightnings</text>
       <rect
         width="600"
         height="20"
-        :x="this.svgWidth / 4"
-        :y="this.svgHeight - 40"
+        :x="this.svgWidth / 3.8"
+        :y="this.svgHeight - 60"
         class="legend-bar"
         stroke="#7400ff"
         rx="10"
@@ -87,7 +87,7 @@ export default {
     projection () {
       return geoNaturalEarth1()
         .scale(220)
-        .translate([this.svgWidth / 2 - 50, this.svgHeight / 2 + 0])
+        .translate([this.svgWidth / 2 - 35, this.svgHeight / 2 + 0])
         .precision(0.1)
     },
     pathConverter () {
