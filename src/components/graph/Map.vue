@@ -83,10 +83,11 @@ export default {
     }
   },
   computed: {
-    ...mapState(['world']),
+    ...mapState(['world', 'viewportWidth']),
     projection () {
+      const scaleSize = this.viewportWidth < 900 ? 150 : 220
       return geoNaturalEarth1()
-        .scale(220)
+        .scale(scaleSize)
         .translate([this.svgWidth / 2 - 35, this.svgHeight / 2 + 0])
         .precision(0.1)
     },

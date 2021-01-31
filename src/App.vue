@@ -1,6 +1,6 @@
 <template>
-  <div id="app">
-    <LoadingScreen v-if="isLoading" />
+  <div id="app" ref="app">
+    <LoadingScreen v-if="isLoading | width < 768" :size="width"/>
     <div class="content" v-else>
     <div class="bar">
       <div class="inner-bar">
@@ -57,13 +57,34 @@ export default {
   },
   data () {
     return {
-      isLoading: true
+      isLoading: true,
+      width: 0,
+      height: 0
     }
   },
   mounted () {
     setTimeout(() => {
       this.isLoading = false
     }, 1000)
+    this.calcSizes()
+    window.addEventListener('resize', this.calcSizes, false)
+  },
+  updated () {
+    this.calcSizes()
+  },
+  beforeDestroy () {
+    this.calcSizes()
+    window.removeEventListener('resize', this.calcSizes, false)
+  },
+  methods: {
+    calcSizes: function () {
+      const { app } = this.$refs
+      const width = app.clientWidth
+      const height = app.clientHeight || app.parentNode.clientHeight
+      this.width = Math.max(width, 500)
+      this.height = Math.max(height, 500)
+      this.$store.commit('CALC_WIDTH', width)
+    }
   }
 }
 </script>
@@ -178,6 +199,20 @@ export default {
   .style-chooser .vs__clear, .style-years .vs__clear,
   .style-chooser .vs__open-indicator, .style-years .vs__open-indicator {
     fill: #009777;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .bar {
+    .inner-bar {
+      .labels-container {
+        .selectors, .router-link-exact-active {
+          h3 {
+            font-size: 18px !important;
+          }
+        }
+      }
+    }
   }
 }
 </style>

@@ -39,7 +39,8 @@ export default new Vuex.Store({
     keys,
     filteredData: groupedData,
     checkedYears: ['2020'],
-    checkedCountry: null
+    checkedCountry: null,
+    viewportWidth: 0
   },
   mutations: {
     FILTER_YEARS (state, value) {
@@ -50,7 +51,11 @@ export default new Vuex.Store({
     },
     FILTER_COUNTRIES (state, value) {
       state.checkedCountry = value
+    },
+    CALC_WIDTH (state, width) {
+      state.viewportWidth = width
     }
+
   },
   actions: {
     filterData ({ state, commit, rootState }) {

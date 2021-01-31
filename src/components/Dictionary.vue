@@ -209,4 +209,14 @@ export default {
     }
   }
 }
+
+@media only screen and (max-width: 1000px) {
+  .outer-container {
+    .map-controls {
+      top: 8%;
+      bottom: 0%;
+    }
+  }
+}
+
 </style>

@@ -191,7 +191,7 @@ export default {
 
     display: inline-flex;
     width: 1100vw;
-    height: 92vh;
+    height: 94vh;
 
     .text-paragraph {
       border-right: 1px solid #009777;
@@ -255,6 +255,9 @@ export default {
 
         .shapes {
           display: flex;
+          flex-flow: row wrap;
+          align-content: space-between;
+
           p {
             cursor: pointer;
             font-size: 14px;
@@ -274,4 +277,27 @@ export default {
     }
   }
 }
+
+@media only screen and (max-width: 1000px) {
+  .outer-container {
+    .inner-container {
+      height: 94vh;
+      .legend-container {
+        .legend-inner {
+          h3 {
+            margin-top: 15px;
+          }
+
+          .shapes {
+            p {
+              margin-right: 10px;
+              margin-bottom: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 </style>

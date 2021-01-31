@@ -79,4 +79,21 @@ export default {
     }
   }
 }
+
+@media only screen and (max-width: 1000px) {
+
+  .introduction {
+
+    .main-body {
+      .introduction-text {
+        column-count: 1 !important;
+      }
+      .introduction-img {
+        width: 50% !important;
+        left: calc(98% - 55%) !important;
+      }
+    }
+  }
+}
+
 </style>

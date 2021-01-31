@@ -13,12 +13,14 @@
         <p>country:</p>
         <div class="countries">
           <v-select class="style-chooser" :options="countries" v-model="checkedCountry"></v-select>
-          <p class="Africa-color">Africa</p>
-          <p class="Asia-color">Asia</p>
-          <p class="Europe-color">Europe</p>
-          <p class="NAmerica-color">N. America</p>
-          <p class="Oceania-color">Oceania</p>
-          <p class="SAmerica-color">S. America</p>
+          <!-- <div class="continents">
+            <p class="Africa-color">Africa</p>
+            <p class="Asia-color">Asia</p>
+            <p class="Europe-color">Europe</p>
+            <p class="NAmerica-color">N. America</p>
+            <p class="Oceania-color">Oceania</p>
+            <p class="SAmerica-color">S. America</p>
+          </div> -->
         </div>
       </div>
     </div>
@@ -35,7 +37,7 @@ Vue.component('v-select', vSelect)
 export default {
   name: 'Filters',
   computed: {
-    ...mapState(['years', 'countries']),
+    ...mapState(['years', 'countries', 'viewportWidth']),
     checkedYears: {
       get () {
         return this.$store.state.checkedYears
@@ -119,6 +121,12 @@ export default {
 
     .countries {
       display: inline-flex;
+
+      .continents {
+        display: inline-flex;
+        flex-flow: row wrap;
+        align-content: space-between;
+      }
       p {
         margin-top: 18px;
         margin-left: 20px;
@@ -134,6 +142,12 @@ export default {
         display: inline-flex;
       }
     }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .label-title {
+    font-size: 12px;
   }
 }
 

@@ -3,6 +3,7 @@
     <div class="inner-container">
       <div class="loader">
         <img src="@/assets/img/report-icon.gif"/>
+        <p v-if="size < 768">please deafult to a bigger viewport</p>
       </div>
     </div>
   </div>
@@ -10,7 +11,10 @@
 
 <script>
 export default {
-  name: 'LoadingScreen'
+  name: 'LoadingScreen',
+  props: {
+    size: Number
+  }
 }
 </script>
 
