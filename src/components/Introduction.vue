@@ -2,23 +2,37 @@
   <div class="introduction">
     <div class="innerbody">
       <div class="main-body">
-        <!-- <h2 class="title">Introduction title</h2> -->
+        <img class="introduction-img" src="../assets/img/ufos.gif"/>
         <div class="initial-paragraph">
           <p class="introduction-text">
-            An unidentified flying object (UFO) is any aerial phenomenon that
-            cannot immediately be identified or explained. From the beginning of
-            1900 <span>more than 80.000 UFOs sightings have been reported</span>.
-            In August 2020 the Pentagon decided to form a new body to monitor these
-            mysterious events <span><a href="https://www.theguardian.com/us-news/2020/aug/15/us-department-defense-ufo-taskforce">(source)</a></span>.
-            I decided to visualize them, starting from 2010. Each sightning is represented
-            as a glyph, based on the shape of these mysterious flying objects: blinking lights,
-            crosses, cylinders, mutable structures are just some of the weird thigs reported. Some
-            entries even have comments and testimonies describing the event and the object in detail.
-            Some others are crooked and incomplete. Here each one of them can be browsed and geo-located.
-            <span>We still believe. We want to believe. We are not alone in this universe.</span>
+            While all eyes were on the still-raging pandemic, the Pentagon quietly
+            released their records of reported UFO sightings around the world
+            (yes, really). The newly declassified information came on the heels
+            of years of witness testimonies collected by the <span><a href="www.nuforc.org/">
+            National UFO Reporting Center in Washington DC</a></span> for several decades.
+            So, in need of a little comic relief from the monotony of lockdown life,
+            we decided to comb through the new material and see what the data might
+            reveal! Some entries were incredibly detailed, including close descriptions
+            of each UFO’s design, brightness, and speed. Some seemed more offhand, or vague.
+            All of them were weird.
+          <br/><br/>
+            We had so many questions. Where do these testimonies send to come from?
+            When are they most often reported? For a broader view, we designed a
+            <span><router-link to="/chronology">
+              density heat map &#8614;
+            </router-link></span>, complete with glowing hotspots of supposed
+            extra-terrestrial activity, then a <span><router-link to="/chronology">
+              timeline dating back to 2017 &#8614;
+            </router-link></span>.
+            One trend immediately stood out to us; reports tend to come in during
+            holiday times, when many people feel lonely. The first lockdown in 2020
+            saw a sharp increase in witness testimonies and we experienced an
+            unprecedented sense of alienation. And what began as a fun and silly
+            project - we aren’t serious UFO believers ourselves - became a poignant
+            reflection on the chaotic time we’re living through, when we want to
+            believe we’re not alone.
           </p>
         </div>
-        <img class="introduction-img" src="../assets/img/ufos.gif"/>
       </div>
       <Sightings />
     </div>
@@ -44,18 +58,20 @@ export default {
   width: 100%;
 
   .main-body {
-    height: 68vh;
+    height: 50%;
     .introduction-img {
-      width: 30%;
+      width: 60%;
       position: absolute;
-      top: 40vh;
-      left: calc(98% - 30%);
-      mix-blend-mode: color-dodge;
+      top: 10%;
+      z-index: 2;
+      left: 38%;
+      opacity: 0.2;
+      pointer-events: none;
     }
 
     margin: 0 auto;
-    width: 70%;
-    padding-top: 100px;
+    padding-top: 80px;
+    padding-bottom: 1.5%;
 
     .title {
       font-family: $titles;
@@ -63,17 +79,18 @@ export default {
 
     .initial-paragraph {
       .introduction-text {
-        font-size: 1.2em;
-        letter-spacing: 0.46px;
+        margin: 0 10%;
+        margin-bottom: 50px;
+        width: 40%;
+        font-size: 1em;
+        letter-spacing: 0.45px;
         font-family: $paragraphs;
-        column-count: 2;
-        column-gap: 40px;
 
         span {
           text-decoration-line: underline;
           text-decoration-style: solid;
           text-decoration-color: #7400ff;
-          text-decoration-thickness: 5px;
+          text-decoration-thickness: 2px;
         }
       }
     }
@@ -85,6 +102,7 @@ export default {
   .introduction {
 
     .main-body {
+      height: 100vh;
       .introduction-text {
         column-count: 1 !important;
       }

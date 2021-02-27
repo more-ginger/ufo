@@ -6,16 +6,16 @@
       <div class="inner-bar">
         <div class="labels-container">
           <router-link to="/">
-            <h3 class="title">we still believe</h3>
+            <h3 class="title">close encounters</h3>
           </router-link>
           <div class="selectors">
-            <router-link to="/dictionary">
-              <h3>all shapes</h3>
-            </router-link>
             <router-link to="/chronology">
-              <h3>in chronological order</h3>
+              <h3>timeline</h3>
             </router-link>
-            <router-link to="/submit">
+            <router-link to="/dictionary">
+              <h3>world map</h3>
+            </router-link>
+            <router-link to="/about">
               <img class="submit" src="./assets/img/eye-report.png"/>
             </router-link>
           </div>
@@ -42,7 +42,7 @@ const routes = [
   { path: '/', component: Introduction },
   { path: '/chronology', component: Streamgraph },
   { path: '/dictionary', component: Dictionary },
-  { path: '/submit', component: Submit }
+  { path: '/about', component: Submit }
 ]
 
 const router = new VueRouter({

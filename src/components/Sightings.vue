@@ -89,6 +89,7 @@ export default {
 @import '../assets/style/countries.scss';
 
 .main-visualization {
+  background-color: #1B0041;
   width: 95%;
   margin: 0 auto;
 

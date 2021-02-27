@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { groupBy, uniq } from 'lodash'
+import list from 'dsv-loader!@/assets/data/list.csv' // eslint-disable-line import/no-webpack-loader-syntax
 import events from 'dsv-loader!@/assets/data/sightnings_with_coords.csv' // eslint-disable-line import/no-webpack-loader-syntax
-import world from '@/assets/data/world.json' // eslint-disable-line import/no-webpack-loader-syntax
+import world from '@/assets/data/world.json'
 
 Vue.use(Vuex)
 
@@ -27,10 +28,15 @@ const groupedData = groupBy(data, function (d) {
 
 const years = uniq(data.map(d => { return d.year.toString() }))
 const keys = uniq(data.map(d => { return d.shape }))
-const countries = uniq(data.map(d => { return d.country }))
+const countries = uniq(data.map(d => { return d.country })).sort(function (a, b) {
+  if (a < b) { return -1 }
+  if (a > b) { return 1 }
+  return 0
+})
 
 export default new Vuex.Store({
   state: {
+    list: groupBy(list, 'Category'),
     world,
     data,
     groupedData,

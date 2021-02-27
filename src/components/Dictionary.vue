@@ -3,18 +3,36 @@
     <div class="text-paragraph" :class="{'slide': activeOverlay}">
       <div class="inner-text">
         <div class="paragraph-text">
-          <p>
-            Obviously most of the sightnings happen in the US and/or Canada.
-            This is possibly due to the
+          <h3>
+            Global Encounters (2017 – 2020)
+          </h3>
+          <p class="directions">
+            This view only represents dataset entries with valid coordinates.
+            Invalid or missing locations have been removed. Please note you are
+            looking only at a portion of the entire dataset. By scrolling
+            through available shapes on the right side of the screen and selecting
+            them you can see how similar sightings are distributed around the world.
           </p>
           <p>
-            To explore popular sightnings sites scroll and pick a shape from the
-            right side list.
+            Since our data only comes from NUFORC, an organization based out of
+            Washington DC, it is course biased toward entries from North America.
+            It should be noted that similar record-keeping bodies have been set
+            up by governments around the world (the UK’s Ministry of Defense just
+            released its files this year). There’s also a significant cultural and
+            linguistic bias to consider when it comes to submissions. NUFORC has
+            received the most entries from coastal areas where population density
+            and light pollution are both high relative to other parts of the country.
+            Europe could also be considered a large hotspot, particularly Spain,
+            Italy, Germany, and the Balkans. If we filter by shape, the hotspots
+            shift. We also noticed that shapes marked ‘unknown’ are quite common,
+            perhaps due to the labeling process upon submission. Triangles seem to
+            be recorded across the globe, particularly in South America, Australia,
+            and Africa.
           </p>
         </div>
         <div  @click="activeOverlay = !activeOverlay" class="activator">
           <p>
-            Where do most of the sightnings happen? [Read]
+            [X] Where is more likely to spot an UFO?
           </p>
         </div>
       </div>
@@ -55,7 +73,7 @@ export default {
   data () {
     return {
       selectedShape: 'default',
-      activeOverlay: true
+      activeOverlay: false
     }
   },
   computed: {
@@ -127,6 +145,7 @@ export default {
         border-left: 1px solid #009777;
         padding-left: 10px;
         padding-right: 15px;
+        margin-left: 10px;
         cursor: pointer;
 
         p {
@@ -138,6 +157,18 @@ export default {
           margin: 0;
           white-space: nowrap;
         }
+      }
+
+      .paragraph-text {
+        .directions {
+          color: #7400ff;
+          border-left: 1px solid #7400ff;
+          margin-top: 30px;
+          padding-left: 10px;
+          font-size: 12px;
+          font-style: italic;
+        }
+
       }
     }
   }

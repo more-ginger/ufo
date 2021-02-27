@@ -1,7 +1,7 @@
 <template>
   <div class="filter-menu">
     <div>
-      <p class="label-title">All sightnings (2017 - 2020)</p>
+      <p class="label-title">Witness Testimonies (2017 - 2020)</p>
     </div>
     <div class="filters">
       <div class="filter">
@@ -13,14 +13,6 @@
         <p>country:</p>
         <div class="countries">
           <v-select class="style-chooser" :options="countries" v-model="checkedCountry"></v-select>
-          <!-- <div class="continents">
-            <p class="Africa-color">Africa</p>
-            <p class="Asia-color">Asia</p>
-            <p class="Europe-color">Europe</p>
-            <p class="NAmerica-color">N. America</p>
-            <p class="Oceania-color">Oceania</p>
-            <p class="SAmerica-color">S. America</p>
-          </div> -->
         </div>
       </div>
     </div>

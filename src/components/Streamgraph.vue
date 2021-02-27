@@ -3,8 +3,32 @@
     <div class="inner-container">
       <div class="text-paragraph">
         <div class="inner-text">
-          Scroll to the right for a chrnological overview of sightnings according
-          to their reported shape.
+          <h3>
+            Timeline of Encounters
+          </h3>
+           <h5>(Jan'2017 / Dec' 2020)</h5>
+          <p class="directions">
+            Scroll right to move forward in time. Select a category by hovering
+            directly on the chart or choosing a shape.
+          </p>
+          <p class="summary">
+            We note that encounters that describe
+            <span style="color:rgb(58, 197, 203);">lights</span> appear most frequently,
+            followed by <span style="color:rgb(93, 162, 207);">
+            circles</span> and <span style="color:rgb(81, 174, 206);">formations</span>.
+            It’s of course unclear what people actually saw, and our references are limited to those included in the
+            NUFORC database. The most prominent patterns emerge by focusing on
+            the precise dates; sightings seem to spike around US national holidays -
+            Independence Day Weekend in July, Halloween in October, Thanksgiving
+            weekend in November, or Christmas Time.
+            <br/><br/>
+            Then, in 2020, the pandemic hits, and sightings nearly double!
+            Reports describe even more elaborate shapes flying through the air.
+            This begins at the start of March through to the end of April,
+            when things settle down again. It’s difficult to pinpoint the exact reason -
+            loneliness in lockdown, an increase in media coverage of the topic in 2020 -
+            but the timing of the  increase is notable.
+          </p>
         </div>
       </div>
       <svg ref="vis">
@@ -34,7 +58,7 @@
             <p
               v-for="(key, k) in keys"
               :key="k"
-              :style="`color: ${area[k].color};`"
+              :style="`color: ${activeShape !== area[k].id & activeShape !== '' ? 'white': area[k].color};`"
               :class="
                 [area[k].id,
                 {
@@ -46,10 +70,6 @@
               {{ key }}
             </p>
           </div>
-          <h3>
-            Sighted UFOs shapes over time according
-            to testimonies (Jan'2017 / Dec' 2020)
-          </h3>
         </div>
       </div>
     </div>
@@ -191,19 +211,46 @@ export default {
 
     display: inline-flex;
     width: 1100vw;
-    height: 94vh;
+    height: 92vh;
 
     .text-paragraph {
       border-right: 1px solid #009777;
-      width: 2%;
+      width: 3%;
+      height: 100%;
 
       .inner-text {
+
+        h3 {
+          margin-bottom: 10px;
+        }
+        h5 {
+          font-family: $titles;
+          margin-top: 0px;
+        }
+
+        overflow-y: visible;
         padding: 10px;
         font-family: $paragraphs;
         white-space: normal;
-        width: 90%;
-        height: 200%;
-        overflow-y: hidden;
+        width: 80%;
+        height: 65%;
+        padding-left: 35px;
+
+        .directions {
+            // color: #7400ff;
+          border-left: 1px solid #009777;
+          margin-top: 30px;
+          padding-left: 10px;
+          font-size: 12px;
+          font-style: italic;
+        }
+
+        .summary {
+          margin-top: 20px;
+          height: 100%;
+          overflow-y: scroll;
+        }
+        // overflow-y: hidden;
       }
     }
 
@@ -251,6 +298,7 @@ export default {
           font-size: 12px;
           margin: 0px 0px 20px 0px;
         }
+
         // display: inline-flex;
 
         .shapes {
