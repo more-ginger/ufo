@@ -32,7 +32,7 @@
         </div>
         <div  @click="activeOverlay = !activeOverlay" class="activator">
           <p>
-            [X] Where is more likely to spot an UFO?
+            [X] Where are you most likely to spot a UFO?
           </p>
         </div>
       </div>

@@ -3,7 +3,7 @@
     <div class="inner-container">
       <div class="loader">
         <img src="@/assets/img/report-icon.gif"/>
-        <p v-if="size < 768">please deafult to a bigger viewport</p>
+        <p v-if="size < 768">please default to a bigger viewport</p>
       </div>
     </div>
   </div>

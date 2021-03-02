@@ -9,7 +9,8 @@
             released their records of reported UFO sightings around the world
             (yes, really). The newly declassified information came on the heels
             of years of witness testimonies collected by the <span><a href="www.nuforc.org/">
-            National UFO Reporting Center in Washington DC</a></span> for several decades.
+            National UFO Reporting Center in Washington DC
+            <img src="../assets/img/pointer.svg"/></a></span> for several decades.
             So, in need of a little comic relief from the monotony of lockdown life,
             we decided to comb through the new material and see what the data might
             reveal! Some entries were incredibly detailed, including close descriptions
@@ -19,12 +20,13 @@
             We had so many questions. Where do these testimonies send to come from?
             When are they most often reported? For a broader view, we designed a
             <span><router-link to="/chronology">
-              density heat map &#8614;
+              density heat map <img src="../assets/img/pointer.svg"/>
             </router-link></span>, complete with glowing hotspots of supposed
             extra-terrestrial activity, then a <span><router-link to="/chronology">
-              timeline dating back to 2017 &#8614;
+              timeline dating back to 2017 <img src="../assets/img/pointer.svg"/>
             </router-link></span>.
-            One trend immediately stood out to us; reports tend to come in during
+            <br/><br/>
+            One trend immediately stood out to us: reports tend to come in during
             holiday times, when many people feel lonely. The first lockdown in 2020
             saw a sharp increase in witness testimonies and we experienced an
             unprecedented sense of alienation. And what began as a fun and silly
@@ -60,9 +62,9 @@ export default {
   .main-body {
     height: 50%;
     .introduction-img {
-      width: 60%;
+      width: 800px;
       position: absolute;
-      top: 10%;
+      top: 100px;
       z-index: 2;
       left: 38%;
       opacity: 0.2;
@@ -87,10 +89,20 @@ export default {
         font-family: $paragraphs;
 
         span {
-          text-decoration-line: underline;
-          text-decoration-style: solid;
-          text-decoration-color: #7400ff;
-          text-decoration-thickness: 2px;
+          text-decoration-line: none;
+          color: #7400ff;
+
+          img {
+            width:0.7em;
+          }
+        }
+
+        span:hover {
+          color: pink;
+
+          img {
+            filter: hue-rotate(15deg);
+          }
         }
       }
     }
@@ -103,12 +115,15 @@ export default {
 
     .main-body {
       height: 100vh;
-      .introduction-text {
-        column-count: 1 !important;
+      width: 100%;
+      .initial-paragraph {
+        .introduction-text {
+          width: 80%;
+        }
       }
       .introduction-img {
         width: 50% !important;
-        left: calc(98% - 55%) !important;
+        left: calc(98% - 50%) !important;
       }
     }
   }

@@ -45,7 +45,7 @@
         :x="this.svgWidth / 2.1"
         :y="this.svgHeight - 70"
         text-anchor="middle"
-        >Events density</text>
+        >Number of sightings</text>
       <rect
         width="600"
         height="20"
