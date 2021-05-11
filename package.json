@@ -14,7 +14,7 @@
     "d3-collection": "^1.0.7",
     "d3-geo-projection": "^3.0.0",
     "dsv-loader": "^2.0.0",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "topojson-client": "^3.1.0",
     "v-tooltip": "^2.0.3",
     "vue": "^2.6.11",
